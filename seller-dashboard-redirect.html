@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting to Seller Dashboard - EcoFinds</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .dark body {
+            background-color: #111827;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="text-center p-8 max-w-md">
+        <div class="mb-8 animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-600 mx-auto"></div>
+        <h1 class="text-2xl font-bold mb-4">Redirecting to Seller Dashboard...</h1>
+        <p class="text-gray-600 dark:text-gray-300 mb-8">If you're not redirected automatically, please click the button below.</p>
+        <button id="manual-redirect" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium">Go to Dashboard</button>
+    </div>
+
+    <script>
+        // Check for dark mode preference
+        const isDarkMode = localStorage.getItem('theme') === 'dark' || 
+                          (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        
+        if (isDarkMode) {
+            document.documentElement.classList.add('dark');
+        }
+        
+        // Handle redirect
+        document.addEventListener('DOMContentLoaded', function() {
+            // Try multiple possible dashboard locations
+            const possiblePaths = [
+                './seller-dashboard.html',
+                '/seller-dashboard.html',
+                'seller-dashboard.html',
+                '../seller-dashboard.html',
+                '/oddo3/seller-dashboard.html'
+            ];
+            
+            // Function to check if a file exists
+            async function checkFile(url) {
+                try {
+                    const response = await fetch(url, { method: 'HEAD' });
+                    return response.ok;
+                } catch (error) {
+                    console.error(`Error checking ${url}:`, error);
+                    return false;
+                }
+            }
+            
+            // Try each path and redirect to the first one that works
+            async function findDashboard() {
+                for (const path of possiblePaths) {
+                    console.log(`Checking ${path}...`);
+                    if (await checkFile(path)) {
+                        console.log(`Found dashboard at ${path}`);
+                        window.location.href = path;
+                        return;
+                    }
+                }
+                
+                // If no path works, show error
+                document.querySelector('h1').textContent = 'Dashboard Not Found';
+                document.querySelector('p').textContent = 'Please ensure the seller-dashboard.html file is properly uploaded to your server.';
+            }
+            
+            // Add manual redirect button handler
+            document.getElementById('manual-redirect').addEventListener('click', function() {
+                window.location.href = 'seller-dashboard.html';
+            });
+            
+            // Start the automatic redirect process
+            findDashboard();
+        });
+    </script>
+</body>
+</html>

@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EcoFinds - Sustainable Shopping</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Tailwind Configuration for dark mode
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#10B981', // green-600
+                            dark: '#34D399'   // green-400
+                        }
+                    }
+                }
+            }
+        };
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="emailStorage.js"></script>
@@ -30,72 +46,124 @@
             left: 0.75rem;
             z-index: 10;
         }
+        
+        /* Dark mode specific styles */
+        .dark .secondhand-badge {
+            background-color: rgba(52, 211, 153, 0.9);
+            color: #111827;
+        }
+        
+        /* Theme toggle button animation */
+        .theme-toggle-circle {
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .dark .theme-toggle-circle {
+            transform: translateX(24px);
+        }
+        
+        /* Product card hover effects */
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .dark .product-card:hover {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Animation for page transitions */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-animate {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
 
     <!-- Header -->
-    <header class="bg-white shadow-md sticky top-0 z-40">
+    <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-40 transition-colors duration-300">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <!-- Logo -->
-                <a href="#" class="text-3xl font-bold text-green-600">EcoFinds</a>
+                <a href="#" class="text-3xl font-bold text-green-600 dark:text-green-400 transition-colors duration-300">EcoFinds</a>
 
                 <!-- Desktop Navigation -->
                 <nav class="hidden md:flex space-x-8">
-                    <a href="#shop" class="text-gray-600 hover:text-green-600 transition">Shop</a>
-                    <a href="#secondhand" class="text-gray-600 hover:text-green-600 transition">Secondhand</a>
-                    <a href="#about" class="text-gray-600 hover:text-green-600 transition">About</a>
-                    <a href="#contact" class="text-gray-600 hover:text-green-600 transition">Contact</a>
+                    <a href="#shop" class="text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors duration-300">Shop</a>
+                    <a href="#secondhand" class="text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors duration-300">Secondhand</a>
+                    <a href="#about" class="text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors duration-300">About</a>
+                    <a href="#contact" class="text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors duration-300">Contact</a>
                 </nav>
 
                 <!-- Icons -->
                 <div class="flex items-center space-x-4">
-                    <button id="search-btn" class="text-gray-600 hover:text-green-600">
+                    <!-- Theme Toggle Button -->
+                    <button id="theme-toggle" class="w-12 h-6 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center transition duration-300 focus:outline-none shadow">
+                        <div class="theme-toggle-circle w-5 h-5 relative rounded-full transition duration-500 transform bg-white dark:bg-green-400 -translate-x-0 p-1 text-gray-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 text-yellow-500 dark:text-gray-800">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                        </div>
+                    </button>
+                    
+                    <button id="search-btn" class="text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors duration-300">
                         <i data-lucide="search"></i>
                     </button>
-                    <button id="user-btn" class="text-gray-600 hover:text-green-600">
+                    <button id="user-btn" class="text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors duration-300">
                         <i data-lucide="user"></i>
                     </button>
-                    <button id="cart-btn" class="relative text-gray-600 hover:text-green-600">
+                    <button id="cart-btn" class="relative text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors duration-300">
                         <i data-lucide="shopping-cart"></i>
-                        <span id="cart-count" class="absolute -top-2 -right-2 bg-green-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-green-600 dark:bg-green-500 text-white dark:text-gray-900 text-xs rounded-full h-5 w-5 flex items-center justify-center transition-colors duration-300">0</span>
                     </button>
-                    <button id="mobile-menu-btn" class="md:hidden text-gray-600 hover:text-green-600">
+                    <button id="mobile-menu-btn" class="md:hidden text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors duration-300">
                         <i data-lucide="menu"></i>
                     </button>
                 </div>
             </div>
         </div>
         <!-- Mobile Navigation -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
-            <a href="#shop" class="block py-3 px-4 text-gray-600 hover:bg-gray-100 hover:text-green-600 transition">Shop</a>
-            <a href="#secondhand" class="block py-3 px-4 text-gray-600 hover:bg-gray-100 hover:text-green-600 transition">Secondhand</a>
-            <a href="#about" class="block py-3 px-4 text-gray-600 hover:bg-gray-100 hover:text-green-600 transition">About</a>
-            <a href="#contact" class="block py-3 px-4 text-gray-600 hover:bg-gray-100 hover:text-green-600 transition">Contact</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 transition-colors duration-300">
+            <a href="#shop" class="block py-3 px-4 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-green-600 dark:hover:text-green-400 transition-colors duration-300">Shop</a>
+            <a href="#secondhand" class="block py-3 px-4 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-green-600 dark:hover:text-green-400 transition-colors duration-300">Secondhand</a>
+            <a href="#about" class="block py-3 px-4 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-green-600 dark:hover:text-green-400 transition-colors duration-300">About</a>
+            <a href="#contact" class="block py-3 px-4 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-green-600 dark:hover:text-green-400 transition-colors duration-300">Contact</a>
         </div>
     </header>
 
     <!-- Main Content -->
     <main>
         <!-- Hero Section -->
-        <section class="relative bg-gray-200 h-[60vh] min-h-[400px] flex items-center justify-center text-center">
-            <img src="https://placehold.co/1600x900/A3E635/14532D?text=Sustainable+Products" alt="Eco-friendly products banner" class="absolute inset-0 w-full h-full object-cover opacity-80">
-            <div class="relative z-10 p-4">
-                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">Live Sustainably</h1>
-                <!-- <p class="text-lg md:text-xl text-white mb-8 max-w-2xl mx-auto drop-shadow-md">Discover curated, eco-friendly and secondhand products for a greener lifestyle.</p> -->
+        <section class="relative bg-gray-200 dark:bg-gray-800 h-[70vh] min-h-[500px] flex items-center justify-center text-center transition-colors duration-300 overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-green-600/30 to-blue-600/30 dark:from-green-600/40 dark:to-blue-600/40 z-10"></div>
+            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Eco-friendly products banner" class="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-10000 hover:scale-105">
+            <div class="relative z-20 p-8 max-w-4xl mx-auto section-animate">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg">Live Sustainably</h1>
+                <p class="text-lg md:text-xl text-white mb-10 max-w-2xl mx-auto drop-shadow-md">Discover curated, eco-friendly and secondhand products for a greener lifestyle.</p>
                 <div class="flex flex-wrap gap-4 justify-center">
-                    <a href="#shop" class="bg-green-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-700 transition shadow-lg">Shop New</a>
-                    <a href="#secondhand" class="bg-green-700 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-800 transition shadow-lg">Browse Secondhand</a>
+                    <a href="#shop" class="bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white dark:text-gray-900 px-8 py-4 rounded-lg text-lg font-semibold transition-colors duration-300 shadow-lg transform hover:-translate-y-1">Shop New</a>
+                    <a href="#secondhand" class="bg-transparent border-2 border-white hover:bg-white/20 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 shadow-lg transform hover:-translate-y-1">Browse Secondhand</a>
                 </div>
             </div>
         </section>
 
         <!-- Featured Products Section -->
-        <section id="shop" class="py-16 sm:py-24">
+        <section id="shop" class="py-20 sm:py-28 bg-white dark:bg-gray-900 transition-colors duration-300">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-bold text-center mb-4">Featured Products</h2>
-                <p class="text-center text-gray-600 mb-12 max-w-xl mx-auto">Handpicked items that are kind to you and the planet. Check out what's popular.</p>
+                <div class="text-center mb-16 section-animate">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800 dark:text-white transition-colors duration-300">Featured Products</h2>
+                    <div class="w-24 h-1 bg-green-600 dark:bg-green-400 mx-auto mb-6 rounded-full transition-colors duration-300"></div>
+                    <p class="text-gray-600 dark:text-gray-300 max-w-xl mx-auto transition-colors duration-300">Handpicked items that are kind to you and the planet. Check out what's popular.</p>
+                </div>
                 <div id="featured-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     <!-- Product cards will be dynamically inserted here -->
                 </div>
@@ -103,31 +171,34 @@
         </section>
 
         <!-- Secondhand Products Section -->
-        <section id="secondhand" class="py-16 sm:py-24 bg-green-50">
+        <section id="secondhand" class="py-20 sm:py-28 bg-green-50 dark:bg-gray-800 transition-colors duration-300">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-bold text-center mb-4">Secondhand Treasures</h2>
-                <p class="text-center text-gray-600 mb-8 max-w-xl mx-auto">
-                    Pre-loved items looking for a new home. Shop sustainably and give these products a second life.
-                </p>
+                <div class="text-center mb-16 section-animate">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800 dark:text-white transition-colors duration-300">Secondhand Treasures</h2>
+                    <div class="w-24 h-1 bg-green-600 dark:bg-green-400 mx-auto mb-6 rounded-full transition-colors duration-300"></div>
+                    <p class="text-gray-600 dark:text-gray-300 max-w-xl mx-auto transition-colors duration-300">
+                        Pre-loved items looking for a new home. Shop sustainably and give these products a second life.
+                    </p>
+                </div>
                 
                 <!-- Category Filter -->
-                <div class="flex flex-wrap justify-center mb-10">
-                    <button class="secondhand-category-btn bg-green-600 text-white m-1 px-4 py-2 rounded-full text-sm font-medium" data-category="all">
+                <div class="flex flex-wrap justify-center mb-12 section-animate">
+                    <button class="secondhand-category-btn bg-green-600 dark:bg-green-500 text-white dark:text-gray-900 m-1 px-6 py-2 rounded-full text-sm font-medium transition-colors duration-300" data-category="all">
                         All Categories
                     </button>
-                    <button class="secondhand-category-btn bg-white text-gray-700 m-1 px-4 py-2 rounded-full text-sm font-medium hover:bg-green-100 transition" data-category="clothing">
+                    <button class="secondhand-category-btn bg-white dark:bg-gray-700 text-gray-700 dark:text-white m-1 px-6 py-2 rounded-full text-sm font-medium hover:bg-green-100 dark:hover:bg-gray-600 transition-colors duration-300" data-category="clothing">
                         Clothing
                     </button>
-                    <button class="secondhand-category-btn bg-white text-gray-700 m-1 px-4 py-2 rounded-full text-sm font-medium hover:bg-green-100 transition" data-category="electronics">
+                    <button class="secondhand-category-btn bg-white dark:bg-gray-700 text-gray-700 dark:text-white m-1 px-6 py-2 rounded-full text-sm font-medium hover:bg-green-100 dark:hover:bg-gray-600 transition-colors duration-300" data-category="electronics">
                         Electronics
                     </button>
-                    <button class="secondhand-category-btn bg-white text-gray-700 m-1 px-4 py-2 rounded-full text-sm font-medium hover:bg-green-100 transition" data-category="home">
+                    <button class="secondhand-category-btn bg-white dark:bg-gray-700 text-gray-700 dark:text-white m-1 px-6 py-2 rounded-full text-sm font-medium hover:bg-green-100 dark:hover:bg-gray-600 transition-colors duration-300" data-category="home">
                         Home & Garden
                     </button>
-                    <button class="secondhand-category-btn bg-white text-gray-700 m-1 px-4 py-2 rounded-full text-sm font-medium hover:bg-green-100 transition" data-category="books">
+                    <button class="secondhand-category-btn bg-white dark:bg-gray-700 text-gray-700 dark:text-white m-1 px-6 py-2 rounded-full text-sm font-medium hover:bg-green-100 dark:hover:bg-gray-600 transition-colors duration-300" data-category="books">
                         Books & Media
                     </button>
-                    <button class="secondhand-category-btn bg-white text-gray-700 m-1 px-4 py-2 rounded-full text-sm font-medium hover:bg-green-100 transition" data-category="toys">
+                    <button class="secondhand-category-btn bg-white dark:bg-gray-700 text-gray-700 dark:text-white m-1 px-6 py-2 rounded-full text-sm font-medium hover:bg-green-100 dark:hover:bg-gray-600 transition-colors duration-300" data-category="toys">
                         Toys & Games
                     </button>
                 </div>
@@ -135,18 +206,25 @@
                 <!-- Secondhand Products Grid -->
                 <div id="secondhand-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     <!-- Secondhand products will be displayed here -->
-                    <div class="text-center text-gray-500 py-12 col-span-4">
+                    <div class="text-center text-gray-500 dark:text-gray-400 py-12 col-span-4">
+                        <div class="flex justify-center mb-4">
+                            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-600 dark:border-green-400"></div>
+                        </div>
                         Loading secondhand products...
                     </div>
                 </div>
                 
                 <!-- Call to Action for Sellers -->
-                <div class="mt-16 bg-white rounded-lg shadow-md p-8 text-center">
-                    <h3 class="text-2xl font-bold mb-4">Have items to sell?</h3>
-                    <p class="text-gray-600 mb-6 max-w-lg mx-auto">
+                <div class="mt-20 bg-white dark:bg-gray-700 rounded-lg shadow-xl p-8 text-center max-w-4xl mx-auto transform transition-all duration-300 hover:shadow-2xl section-animate">
+                    <div class="mb-6 inline-block p-4 bg-green-100 dark:bg-green-900 rounded-full">
+                        <i data-lucide="package-plus" class="w-8 h-8 text-green-600 dark:text-green-400"></i>
+                    </div>
+                    <h3 class="text-2xl md:text-3xl font-bold mb-4 dark:text-white">Have items to sell?</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-8 max-w-lg mx-auto">
                         Join our community of eco-conscious sellers. List your pre-loved items and give them a second life.
                     </p>
-                    <a href="seller-dashboard.html" class="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition inline-block">
+                    <a href="./seller-dashboard.html" id="seller-dashboard-link" class="inline-flex items-center bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white dark:text-gray-900 px-8 py-4 rounded-lg font-semibold transition-colors duration-300 shadow-lg">
+                        <i data-lucide="store" class="w-5 h-5 mr-2"></i>
                         Become a Seller
                     </a>
                 </div>
@@ -154,28 +232,66 @@
         </section>
 
         <!-- New Arrivals Section -->
-        <section id="new-arrivals" class="py-16 sm:py-24">
+        <section id="new-arrivals" class="py-20 sm:py-28 bg-white dark:bg-gray-900 transition-colors duration-300">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-bold text-center mb-4">New Arrivals</h2>
-                <p class="text-center text-gray-600 mb-12 max-w-xl mx-auto">The latest additions to our collection of sustainable goods. Be the first to try them!</p>
+                <div class="text-center mb-16 section-animate">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800 dark:text-white transition-colors duration-300">New Arrivals</h2>
+                    <div class="w-24 h-1 bg-green-600 dark:bg-green-400 mx-auto mb-6 rounded-full transition-colors duration-300"></div>
+                    <p class="text-gray-600 dark:text-gray-300 max-w-xl mx-auto transition-colors duration-300">The latest additions to our collection of sustainable goods. Be the first to try them!</p>
+                </div>
                 <div id="new-arrival-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     <!-- Product cards will be dynamically inserted here -->
                 </div>
             </div>
         </section>
         
-        <!-- About Section Placeholder -->
-        <section id="about" class="py-16 sm:py-24">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                 <h2 class="text-3xl font-bold text-center mb-4">About EcoFinds</h2>
-                 <p class="text-center text-gray-600 max-w-2xl mx-auto">We believe that small changes can make a big impact. EcoFinds was born from a desire to make sustainable living accessible and enjoyable for everyone. We carefully source products that are ethically made, environmentally friendly, and beautifully designed. We also provide a platform for sellers to give their pre-loved items a second life, reducing waste and promoting a circular economy.</p>
+        <!-- About Section -->
+        <section id="about" class="py-20 sm:py-28 bg-green-50 dark:bg-gray-800 transition-colors duration-300">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl section-animate">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800 dark:text-white transition-colors duration-300">About EcoFinds</h2>
+                    <div class="w-24 h-1 bg-green-600 dark:bg-green-400 mx-auto mb-6 rounded-full transition-colors duration-300"></div>
+                </div>
+                <div class="bg-white dark:bg-gray-700 p-8 md:p-12 rounded-xl shadow-lg transition-colors duration-300">
+                    <p class="text-gray-600 dark:text-gray-300 mb-6 text-lg leading-relaxed">
+                        We believe that small changes can make a big impact. EcoFinds was born from a desire to make sustainable living accessible and enjoyable for everyone. We carefully source products that are ethically made, environmentally friendly, and beautifully designed.
+                    </p>
+                    <p class="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
+                        We also provide a platform for sellers to give their pre-loved items a second life, reducing waste and promoting a circular economy. By choosing secondhand, you're not just saving money – you're helping save the planet.
+                    </p>
+                    <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                        <div>
+                            <div class="text-green-600 dark:text-green-400 mb-2">
+                                <i data-lucide="recycle" class="w-10 h-10 mx-auto"></i>
+                            </div>
+                            <h3 class="text-lg font-bold dark:text-white">Sustainable</h3>
+                        </div>
+                        <div>
+                            <div class="text-green-600 dark:text-green-400 mb-2">
+                                <i data-lucide="heart" class="w-10 h-10 mx-auto"></i>
+                            </div>
+                            <h3 class="text-lg font-bold dark:text-white">Ethical</h3>
+                        </div>
+                        <div>
+                            <div class="text-green-600 dark:text-green-400 mb-2">
+                                <i data-lucide="shield" class="w-10 h-10 mx-auto"></i>
+                            </div>
+                            <h3 class="text-lg font-bold dark:text-white">Quality</h3>
+                        </div>
+                        <div>
+                            <div class="text-green-600 dark:text-green-400 mb-2">
+                                <i data-lucide="globe" class="w-10 h-10 mx-auto"></i>
+                            </div>
+                            <h3 class="text-lg font-bold dark:text-white">Community</h3>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
-
     </main>
 
     <!-- Footer -->
-    <footer id="contact" class="bg-gray-800 text-white">
+    <footer id="contact" class="bg-gray-800 dark:bg-gray-900 text-white transition-colors duration-300">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <!-- About -->
@@ -187,9 +303,9 @@
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
                     <ul>
-                        <li class="mb-2"><a href="#shop" class="hover:text-green-400 transition">Shop</a></li>
-                        <li class="mb-2"><a href="#about" class="hover:text-green-400 transition">About Us</a></li>
-                        <li class="mb-2"><a href="#" class="hover:text-green-400 transition">FAQs</a></li>
+                        <li class="mb-2"><a href="#shop" class="text-gray-400 hover:text-green-400 transition-colors duration-300">Shop</a></li>
+                        <li class="mb-2"><a href="#about" class="text-gray-400 hover:text-green-400 transition-colors duration-300">About Us</a></li>
+                        <li class="mb-2"><a href="#" class="text-gray-400 hover:text-green-400 transition-colors duration-300">FAQs</a></li>
                     </ul>
                 </div>
                 <!-- Newsletter -->
@@ -197,8 +313,8 @@
                     <h3 class="text-lg font-semibold mb-4">Newsletter</h3>
                     <p class="text-gray-400 mb-4">Subscribe for updates and special offers.</p>
                     <form id="newsletter-form" class="flex">
-                        <input type="email" id="newsletter-email" placeholder="Your email" class="w-full rounded-l-md px-4 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500">
-                        <button type="submit" class="bg-green-600 px-4 py-2 rounded-r-md hover:bg-green-700 transition">Go</button>
+                        <input type="email" id="newsletter-email" placeholder="Your email" class="w-full rounded-l-md px-4 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white dark:border-gray-600 transition-colors duration-300">
+                        <button type="submit" class="bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white dark:text-gray-900 px-4 py-2 rounded-r-md transition-colors duration-300">Go</button>
                     </form>
                     <p id="newsletter-message" class="text-xs mt-2 hidden"></p>
                 </div>
@@ -206,29 +322,34 @@
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
                     <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-lucide="facebook"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-lucide="instagram"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-lucide="twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 bg-gray-700 dark:bg-gray-800 p-2 rounded-full hover:bg-green-600 dark:hover:bg-green-500">
+                            <i data-lucide="facebook" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 bg-gray-700 dark:bg-gray-800 p-2 rounded-full hover:bg-green-600 dark:hover:bg-green-500">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 bg-gray-700 dark:bg-gray-800 p-2 rounded-full hover:bg-green-600 dark:hover:bg-green-500">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-500 text-sm">
-                <p>&copy; 2025 EcoFinds. All Rights Reserved.</p>
+                <!-- <p>&copy; 2023 EcoFinds. All Rights Reserved. Licensed under the <a href="./LICENSE" class="text-green-400 hover:text-green-300 transition-colors duration-300">MIT License</a>.</p> -->
             </div>
         </div>
     </footer>
 
-
     <!-- Search Modal -->
     <div id="search-modal" class="modal-backdrop fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 opacity-0 pointer-events-none">
-        <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-2xl p-8 transform scale-95">
+        <div class="modal-content bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl p-8 transform scale-95 transition-colors duration-300">
             <div class="flex justify-end">
-                <button class="close-modal text-gray-500 hover:text-gray-800">&times;</button>
+                <button class="close-modal text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white">&times;</button>
             </div>
-            <h2 class="text-2xl font-bold mb-4">Search Products</h2>
+            <h2 class="text-2xl font-bold mb-4 dark:text-white">Search Products</h2>
             <div class="relative mb-6">
-                <input type="text" id="search-input" placeholder="Search for products..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
-                <button id="search-submit" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-green-600">
+                <input type="text" id="search-input" placeholder="Search for products..." class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white transition-colors duration-300">
+                <button id="search-submit" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400">
                     <i data-lucide="search" class="w-5 h-5"></i>
                 </button>
             </div>
@@ -240,83 +361,82 @@
 
     <!-- Cart Modal -->
     <div id="cart-modal" class="modal-backdrop fixed inset-0 bg-black bg-opacity-50 flex justify-end z-50 opacity-0 pointer-events-none">
-        <div class="modal-content bg-white h-full w-full max-w-md shadow-xl transform translate-x-full">
+        <div class="modal-content bg-white dark:bg-gray-800 h-full w-full max-w-md shadow-xl transform translate-x-full transition-colors duration-300">
             <div class="p-6 flex flex-col h-full">
                 <!-- Cart Header -->
-                <div class="flex justify-between items-center pb-4 border-b">
-                    <h2 class="text-2xl font-bold">Your Cart</h2>
-                    <button class="close-modal text-gray-500 hover:text-gray-800">&times;</button>
+                <div class="flex justify-between items-center pb-4 border-b border-gray-200 dark:border-gray-700">
+                    <h2 class="text-2xl font-bold dark:text-white">Your Cart</h2>
+                    <button class="close-modal text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white">&times;</button>
                 </div>
                 <!-- Cart Items -->
                 <div id="cart-items" class="flex-grow overflow-y-auto py-6">
                     <!-- Cart items will be dynamically inserted here -->
                 </div>
                 <!-- Cart Footer -->
-                <div class="border-t pt-6">
+                <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
                     <div class="flex justify-between font-bold text-lg mb-4">
-                        <span>Subtotal</span>
-                        <span id="cart-subtotal">$0.00</span>
+                        <span class="dark:text-white">Subtotal</span>
+                        <span id="cart-subtotal" class="dark:text-white">$0.00</span>
                     </div>
-                    <button id="checkout-btn" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition">Proceed to Checkout</button>
+                    <button id="checkout-btn" class="w-full bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white dark:text-gray-900 py-3 rounded-lg font-semibold transition-colors duration-300">Proceed to Checkout</button>
                 </div>
             </div>
         </div>
     </div>
 
-
     <!-- User Modal (Login/Signup) -->
     <div id="user-modal" class="modal-backdrop fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 opacity-0 pointer-events-none">
-        <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-md p-8 transform scale-95">
+        <div class="modal-content bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md p-8 transform scale-95 transition-colors duration-300">
             <div class="flex justify-end">
-                <button class="close-modal text-gray-500 hover:text-gray-800">&times;</button>
+                <button class="close-modal text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white">&times;</button>
             </div>
             
             <!-- Login Form -->
             <div id="login-form">
-                <h2 class="text-2xl font-bold text-center mb-6">Login</h2>
+                <h2 class="text-2xl font-bold text-center mb-6 dark:text-white">Login</h2>
                 <form id="login-form-element">
                     <div class="mb-4">
-                        <label for="login-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                        <input type="email" id="login-email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
-                        <p id="login-email-error" class="text-red-500 text-xs mt-1 hidden">Please enter a valid email address.</p>
+                        <label for="login-email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                        <input type="email" id="login-email" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white transition-colors duration-300" required>
+                        <p id="login-email-error" class="text-red-500 dark:text-red-400 text-xs mt-1 hidden">Please enter a valid email address.</p>
                     </div>
                     <div class="mb-6">
-                        <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                        <input type="password" id="login-password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
-                        <p id="login-password-error" class="text-red-500 text-xs mt-1 hidden">Password is required.</p>
+                        <label for="login-password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
+                        <input type="password" id="login-password" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white transition-colors duration-300" required>
+                        <p id="login-password-error" class="text-red-500 dark:text-red-400 text-xs mt-1 hidden">Password is required.</p>
                     </div>
-                    <p id="login-error-message" class="text-red-500 text-sm mb-4 hidden text-center">Invalid email or password.</p>
-                    <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition">Login</button>
+                    <p id="login-error-message" class="text-red-500 dark:text-red-400 text-sm mb-4 hidden text-center">Invalid email or password.</p>
+                    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white dark:text-gray-900 py-3 rounded-lg font-semibold transition-colors duration-300">Login</button>
                 </form>
-                <p class="text-center text-sm text-gray-600 mt-6">
-                    Don't have an account? <a href="#" id="show-signup" class="text-green-600 hover:underline font-medium">Sign up</a>
+                <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-6">
+                    Don't have an account? <a href="#" id="show-signup" class="text-green-600 dark:text-green-400 hover:underline font-medium">Sign up</a>
                 </p>
             </div>
 
             <!-- Signup Form (hidden by default) -->
             <div id="signup-form" class="hidden">
-                <h2 class="text-2xl font-bold text-center mb-6">Sign Up</h2>
+                <h2 class="text-2xl font-bold text-center mb-6 dark:text-white">Sign Up</h2>
                 <form id="signup-form-element">
-                     <div class="mb-4">
-                        <label for="signup-name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                        <input type="text" id="signup-name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
-                        <p id="signup-name-error" class="text-red-500 text-xs mt-1 hidden">Name is required.</p>
+                    <div class="mb-4">
+                        <label for="signup-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
+                        <input type="text" id="signup-name" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white transition-colors duration-300" required>
+                        <p id="signup-name-error" class="text-red-500 dark:text-red-400 text-xs mt-1 hidden">Name is required.</p>
                     </div>
                     <div class="mb-4">
-                        <label for="signup-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                        <input type="email" id="signup-email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
-                        <p id="signup-email-error" class="text-red-500 text-xs mt-1 hidden">Please enter a valid email address.</p>
+                        <label for="signup-email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                        <input type="email" id="signup-email" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white transition-colors duration-300" required>
+                        <p id="signup-email-error" class="text-red-500 dark:text-red-400 text-xs mt-1 hidden">Please enter a valid email address.</p>
                     </div>
                     <div class="mb-6">
-                        <label for="signup-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                        <input type="password" id="signup-password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required minlength="6">
-                        <p id="signup-password-error" class="text-red-500 text-xs mt-1 hidden">Password must be at least 6 characters.</p>
+                        <label for="signup-password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
+                        <input type="password" id="signup-password" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:text-white transition-colors duration-300" required minlength="6">
+                        <p id="signup-password-error" class="text-red-500 dark:text-red-400 text-xs mt-1 hidden">Password must be at least 6 characters.</p>
                     </div>
-                    <p id="signup-error-message" class="text-red-500 text-sm mb-4 hidden text-center"></p>
-                    <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition">Create Account</button>
+                    <p id="signup-error-message" class="text-red-500 dark:text-red-400 text-sm mb-4 hidden text-center"></p>
+                    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white dark:text-gray-900 py-3 rounded-lg font-semibold transition-colors duration-300">Create Account</button>
                 </form>
-                 <p class="text-center text-sm text-gray-600 mt-6">
-                    Already have an account? <a href="#" id="show-login" class="text-green-600 hover:underline font-medium">Login</a>
+                <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-6">
+                    Already have an account? <a href="#" id="show-login" class="text-green-600 dark:text-green-400 hover:underline font-medium">Login</a>
                 </p>
             </div>
         </div>
@@ -325,6 +445,30 @@
     <script>
         // Initialize icons
         lucide.createIcons();
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+        
+        // Check for saved theme preference or use system preference
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        // Set initial theme
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            htmlElement.classList.add('dark');
+        }
+        
+        // Handle theme toggle
+        themeToggle.addEventListener('click', function() {
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                htmlElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
 
         // Product Data
         const products = [
@@ -338,7 +482,7 @@
             },
             {
                 id: 2,
-                name: "Organic Cotton Tote",
+                name: "watch",
                 price: 24.50,
                 image: "./product2.jpeg",
                 category: "featured",
@@ -346,7 +490,7 @@
             },
             {
                 id: 3,
-                name: "Glass Water Bottle",
+                name: "i-phone",
                 price: 29.00,
                 image: "./product3.jpeg",
                 category: "featured",
@@ -354,7 +498,7 @@
             },
             {
                 id: 4,
-                name: "Soy Wax Candle",
+                name: "Tabl",
                 price: 15.75,
                 image: "./product4.jpeg",
                 category: "featured",
@@ -362,7 +506,7 @@
             },
             {
                 id: 5,
-                name: "Recycled Paper Journal",
+                name: "watch",
                 price: 66.99,
                 image: "./product5.jpeg",
                 category: "new",
@@ -370,7 +514,7 @@
             },
             {
                 id: 6,
-                name: "Beeswax Food Wraps",
+                name: "Tablet",
                 price: 80.00,
                 image: "./product6.jpeg",
                 category: "new",
@@ -378,7 +522,7 @@
             },
             {
                 id: 7,
-                name: "Compostable Phone Case",
+                name: "Ring & chain",
                 price: 35.00,
                 image: "./product7.jpeg",
                 category: "new",
@@ -386,7 +530,7 @@
             },
             {
                 id: 8,
-                name: "Solar-Powered Charger",
+                name: "Ring",
                 price: 9.99,
                 image: "./product8.jpeg",
                 category: "new",
@@ -394,10 +538,81 @@
             }
         ];
 
+        // Sample secondhand products for demonstration when no items exist in localStorage
+        const sampleSecondhandProducts = [
+            {
+                id: 101,
+                title: "Vintage Leather Jacket",
+                price: 89.99,
+                category: "clothing",
+                condition: "good",
+                description: "Classic brown leather jacket, lightly worn. Size M.",
+                sellerName: "Emma Wilson",
+                isSecondhand: true,
+                images: [{ data: "https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" }]
+            },
+            {
+                id: 102,
+                title: "Refurbished iPhone 11",
+                price: 349.99,
+                category: "electronics",
+                condition: "very-good",
+                description: "Fully functional iPhone 11, 64GB, battery health 92%.",
+                sellerName: "Tech Renewals",
+                isSecondhand: true,
+                images: [{ data: "https://images.unsplash.com/photo-1591337676887-a217a6970a8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" }]
+            },
+            // {
+            //     id: 103,
+            //     title: "Antique Wooden Coffee Table",
+            //     price: 125.00,
+            //     category: "home",
+            //     condition: "good",
+            //     description: "Solid oak coffee table with vintage design, some patina adds character.",
+            //     sellerName: "Vintage Home",
+            //     isSecondhand: true,
+            //     images: [{ data: "https://images.unsplash.com/photo-1592078615290-033ee584dd43?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" }]
+            // },
+            {
+                id: 104,
+                title: "Used Book Collection - Classic Novels",
+                price: 45.00,
+                category: "books",
+                condition: "good",
+                description: "Set of 8 classic novels including works by Dickens, Austen, and Hemingway.",
+                sellerName: "Book Lover",
+                isSecondhand: true,
+                images: [{ data: "https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" }]
+            }
+        ];
+
         // Get secondhand products from localStorage
         function getSecondhandProducts() {
-            const allProducts = JSON.parse(localStorage.getItem('products')) || [];
-            return allProducts.filter(product => product.isSecondhand === true);
+            try {
+                // Try to get products from localStorage
+                const allProducts = JSON.parse(localStorage.getItem('products')) || [];
+                
+                // Filter for secondhand products
+                const secondhandProducts = allProducts.filter(product => 
+                    product.isSecondhand === true || 
+                    product.category === "secondhand" || 
+                    (product.condition && product.condition !== "new")
+                );
+                
+                console.log(`Found ${secondhandProducts.length} secondhand products in localStorage`);
+                
+                // If no products found in localStorage, use sample data
+                if (secondhandProducts.length === 0) {
+                    console.log("Using sample secondhand products");
+                    return sampleSecondhandProducts;
+                }
+                
+                return secondhandProducts;
+            } catch (error) {
+                console.error("Error loading secondhand products:", error);
+                // Return sample data as fallback in case of any error
+                return sampleSecondhandProducts;
+            }
         }
 
         // User Authentication
@@ -423,12 +638,22 @@
             
             products.forEach(product => {
                 const productCard = `
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden group">
-                        <img src="${product.image}" alt="${product.name}" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden product-card transition-colors duration-300">
+                        <div class="relative overflow-hidden">
+                            <img src="${product.image}" alt="${product.name}" class="w-full h-60 object-cover transition-transform duration-500 hover:scale-110">
+                            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/50 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                <div class="p-4 w-full">
+                                    <p class="text-white text-sm line-clamp-2">${product.description}</p>
+                                </div>
+                            </div>
+                        </div>
                         <div class="p-6">
-                            <h3 class="text-lg font-semibold mb-2">${product.name}</h3>
-                            <p class="text-gray-600 mb-4">$${product.price.toFixed(2)}</p>
-                            <button class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition" onclick="addToCart(${product.id})">Add to Cart</button>
+                            <h3 class="text-lg font-semibold mb-2 dark:text-white">${product.name}</h3>
+                            <p class="text-green-600 dark:text-green-400 font-bold mb-4">$${product.price.toFixed(2)}</p>
+                            <button class="w-full bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white dark:text-gray-900 py-2 rounded-lg transition-colors duration-300 flex items-center justify-center" onclick="addToCart(${product.id})">
+                                <i data-lucide="shopping-cart" class="w-4 h-4 mr-2"></i>
+                                Add to Cart
+                            </button>
                         </div>
                     </div>
                 `;
@@ -439,68 +664,110 @@
                     newArrivalsContainer.innerHTML += productCard;
                 }
             });
+            
+            // Re-initialize icons
+            lucide.createIcons();
         }
 
-        // Render secondhand products
+        // Improved render function with better error handling
         function renderSecondhandProducts(category = 'all') {
             const secondhandContainer = document.getElementById('secondhand-products');
-            const secondhandProducts = getSecondhandProducts();
             
-            if (secondhandProducts.length === 0) {
-                secondhandContainer.innerHTML = `
-                    <div class="text-center text-gray-500 py-12 col-span-4">
-                        No secondhand products found. Be the first to <a href="seller-dashboard.html" class="text-green-600 hover:underline">list your items</a>!
-                    </div>
-                `;
-                return;
-            }
-            
-            // Filter by category if needed
-            let filteredProducts = secondhandProducts;
-            if (category !== 'all') {
-                filteredProducts = secondhandProducts.filter(product => product.category === category);
+            try {
+                const secondhandProducts = getSecondhandProducts();
                 
-                if (filteredProducts.length === 0) {
-                    secondhandContainer.innerHTML = `
-                        <div class="text-center text-gray-500 py-12 col-span-4">
-                            No secondhand products found in this category.
+                // Filter by category if needed
+                let filteredProducts = secondhandProducts;
+                if (category !== 'all') {
+                    filteredProducts = secondhandProducts.filter(product => product.category === category);
+                    
+                    if (filteredProducts.length === 0) {
+                        secondhandContainer.innerHTML = `
+                            <div class="text-center text-gray-500 dark:text-gray-400 py-12 col-span-4">
+                                No secondhand products found in this category.
+                                ${category !== 'all' ? `<p class="mt-2"><a href="#" class="text-green-600 dark:text-green-400 hover:underline view-all-products">View all products</a></p>` : ''}
+                            </div>
+                        `;
+                        
+                        // Add event listener for "View all products" link
+                        const viewAllLink = secondhandContainer.querySelector('.view-all-products');
+                        if (viewAllLink) {
+                            viewAllLink.addEventListener('click', function(e) {
+                                e.preventDefault();
+                                // Reset category buttons
+                                const allCategoryBtn = document.querySelector('.secondhand-category-btn[data-category="all"]');
+                                if (allCategoryBtn) {
+                                    allCategoryBtn.click();
+                                } else {
+                                    renderSecondhandProducts('all');
+                                }
+                            });
+                        }
+                        
+                        return;
+                    }
+                }
+                
+                secondhandContainer.innerHTML = '';
+                
+                filteredProducts.forEach(product => {
+                    const imageUrl = product.images && product.images.length > 0 && product.images[0].data
+                        ? product.images[0].data 
+                        : 'https://placehold.co/400x400/E4F3EA/14532D?text=Secondhand';
+                        
+                    const productTitle = product.title || product.name || "Secondhand Item";
+                    const productCondition = product.condition ? 
+                        (product.condition.charAt(0).toUpperCase() + product.condition.slice(1)) : 
+                        "Used";
+                        
+                    const productCard = `
+                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden product-card relative transition-colors duration-300">
+                            <span class="secondhand-badge">Secondhand</span>
+                            <div class="relative overflow-hidden">
+                                <img src="${imageUrl}" 
+                                    alt="${productTitle}" 
+                                    class="w-full h-60 object-cover transition-transform duration-500 hover:scale-110">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-lg font-semibold mb-1 dark:text-white">${productTitle}</h3>
+                                <div class="flex items-center mb-2">
+                                    <span class="inline-block bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs px-2 py-1 rounded-full transition-colors duration-300">
+                                        ${productCondition}
+                                    </span>
+                                </div>
+                                <p class="text-sm mb-2 text-gray-600 dark:text-gray-300">
+                                    <span class="font-medium">Seller:</span> ${product.sellerName || 'Anonymous'}
+                                </p>
+                                <p class="text-green-600 dark:text-green-400 font-bold mb-4">$${product.price.toFixed(2)}</p>
+                                <button class="w-full bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white dark:text-gray-900 py-2 rounded-lg transition-colors duration-300 flex items-center justify-center" 
+                                    onclick="addSecondhandToCart(${product.id})">
+                                    <i data-lucide="shopping-cart" class="w-4 h-4 mr-2"></i>
+                                    Add to Cart
+                                </button>
+                            </div>
                         </div>
                     `;
-                    return;
-                }
-            }
-            
-            secondhandContainer.innerHTML = '';
-            
-            filteredProducts.forEach(product => {
-                // Get the first image from the product images array if available
-                const imageUrl = product.images && product.images.length > 0 
-                    ? product.images[0].data 
-                    : 'https://placehold.co/400x400/E4F3EA/14532D?text=Secondhand';
                     
-                const productCard = `
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden group relative">
-                        <span class="secondhand-badge">Secondhand</span>
-                        <img src="${imageUrl}" 
-                            alt="${product.title}" 
-                            class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300">
-                        <div class="p-6">
-                            <h3 class="text-lg font-semibold mb-1">${product.title}</h3>
-                            <p class="text-xs text-gray-500 mb-2">
-                                ${product.condition.charAt(0).toUpperCase() + product.condition.slice(1)} Condition
-                            </p>
-                            <p class="text-sm mb-1">
-                                <span class="font-medium">Seller:</span> ${product.sellerName || 'Anonymous'}
-                            </p>
-                            <p class="text-green-600 font-bold mb-4">$${product.price.toFixed(2)}</p>
-                            <button class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition" 
-                                onclick="addSecondhandToCart(${product.id})">Add to Cart</button>
-                        </div>
+                    secondhandContainer.innerHTML += productCard;
+                });
+                
+                // Re-initialize icons
+                lucide.createIcons();
+            } catch (error) {
+                console.error("Error rendering secondhand products:", error);
+                secondhandContainer.innerHTML = `
+                    <div class="text-center text-gray-500 dark:text-gray-400 py-12 col-span-4">
+                        <p class="mb-4">There was a problem loading the secondhand products.</p>
+                        <button id="retry-loading" class="bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white dark:text-gray-900 px-4 py-2 rounded-lg transition-colors duration-300">
+                            Try Again
+                        </button>
                     </div>
                 `;
                 
-                secondhandContainer.innerHTML += productCard;
-            });
+                document.getElementById('retry-loading')?.addEventListener('click', function() {
+                    renderSecondhandProducts(category);
+                });
+            }
         }
     
         // Add secondhand product to cart
@@ -514,19 +781,21 @@
             if (existingItem) {
                 existingItem.quantity += 1;
             } else {
-                const imageUrl = product.images && product.images.length > 0 
-                    ? product.images[0].data 
-                    : 'https://placehold.co/400x400/E4F3EA/14532D?text=Secondhand';
+                let imageUrl = 'https://placehold.co/400x400/E4F3EA/14532D?text=Secondhand';
+                
+                if (product.images && product.images.length > 0 && product.images[0].data) {
+                    imageUrl = product.images[0].data;
+                }
                     
                 cart.push({
                     id: product.id,
-                    name: product.title,
+                    name: product.title || product.name,
                     price: product.price,
                     image: imageUrl,
                     quantity: 1,
                     isSecondhand: true,
-                    sellerName: product.sellerName,
-                    condition: product.condition
+                    sellerName: product.sellerName || 'Anonymous',
+                    condition: product.condition || 'used'
                 });
             }
             
@@ -536,7 +805,7 @@
             renderCart();
             
             // Show notification
-            alert(`${product.title} added to cart!`);
+            alert(`${product.title || product.name || "Item"} added to cart!`);
         }
 
         // Category filter for secondhand products
@@ -586,7 +855,7 @@
             alert(`${product.name} added to cart!`);
         }
 
-        // Render cart items
+        // Render cart items with dark mode support
         function renderCart() {
             const cartItemsContainer = document.getElementById('cart-items');
             const cartSubtotal = document.getElementById('cart-subtotal');
@@ -606,19 +875,19 @@
                 subtotal += itemTotal;
                 
                 cartItemsContainer.innerHTML += `
-                    <div class="flex items-center mb-6">
+                    <div class="flex items-center mb-6 pb-4 border-b border-gray-100 dark:border-gray-700">
                         <img src="${item.image}" alt="${item.name}" class="w-20 h-20 rounded-md object-cover mr-4">
                         <div class="flex-grow">
-                            <h3 class="font-semibold">${item.name}</h3>
-                            ${item.isSecondhand ? `<p class="text-xs text-green-600">Secondhand • ${item.condition}</p>` : ''}
+                            <h3 class="font-semibold dark:text-white">${item.name}</h3>
+                            ${item.isSecondhand ? `<p class="text-xs text-green-600 dark:text-green-400">Secondhand • ${item.condition}</p>` : ''}
                             <div class="flex items-center mt-1">
-                                <button class="bg-gray-200 px-2 rounded" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
-                                <span class="mx-2 text-sm">${item.quantity}</span>
-                                <button class="bg-gray-200 px-2 rounded" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+                                <button class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white px-2 rounded transition-colors duration-300" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
+                                <span class="mx-2 text-sm dark:text-gray-300">${item.quantity}</span>
+                                <button class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white px-2 rounded transition-colors duration-300" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
                             </div>
-                            <p class="font-bold mt-1">$${itemTotal.toFixed(2)}</p>
+                            <p class="font-bold mt-1 dark:text-white">$${itemTotal.toFixed(2)}</p>
                         </div>
-                        <button class="text-red-500 hover:text-red-700" onclick="removeFromCart(${item.id})">
+                        <button class="text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300" onclick="removeFromCart(${item.id})">
                             <i data-lucide="trash-2" class="w-5 h-5"></i>
                         </button>
                     </div>
@@ -672,17 +941,20 @@
             
             results.forEach(product => {
                 searchResultsContainer.innerHTML += `
-                    <div class="flex items-center p-4 border-b hover:bg-gray-50">
+                    <div class="flex items-center p-4 border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-300">
                         <img src="${product.image}" alt="${product.name}" class="w-16 h-16 rounded-md object-cover mr-4">
                         <div class="flex-grow">
-                            <h3 class="font-semibold">${product.name}</h3>
-                            <p class="text-sm text-gray-600">${product.description}</p>
-                            <p class="font-bold mt-1">$${product.price.toFixed(2)}</p>
+                            <h3 class="font-semibold dark:text-white">${product.name}</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-300">${product.description}</p>
+                            <p class="font-bold mt-1 text-green-600 dark:text-green-400">$${product.price.toFixed(2)}</p>
                         </div>
-                        <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition" onclick="addToCart(${product.id})">Add</button>
+                        <button class="bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white dark:text-gray-900 px-4 py-2 rounded-lg transition-colors duration-300" onclick="addToCart(${product.id})">Add</button>
                     </div>
                 `;
             });
+            
+            // Re-initialize icons
+            lucide.createIcons();
         }
 
         // Email validation function
@@ -772,7 +1044,8 @@
                 currentUser = {
                     id: user.id,
                     name: user.name,
-                    email: user.email
+                    email: user.email,
+                    role: user.role || 'buyer' // Default to buyer if no role specified
                 };
                 
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
@@ -800,9 +1073,61 @@
             const userBtn = document.getElementById('user-btn');
             
             if (currentUser) {
-                userBtn.innerHTML = `<span class="text-sm mr-2">${currentUser.name.split(' ')[0]}</span><i data-lucide="user-check" class="w-5 h-5"></i>`;
-                // Add a logout option
-                userBtn.onclick = logoutUser;
+                const displayName = currentUser.name.split(' ')[0];
+                const roleIcon = currentUser.role === 'seller' ? 'store' : 'user-check';
+                
+                userBtn.innerHTML = `
+                    <span class="text-sm mr-2">${displayName}</span>
+                    <i data-lucide="${roleIcon}" class="w-5 h-5"></i>
+                `;
+                
+                // Create dropdown menu for logged in users
+                userBtn.onclick = function(e) {
+                    e.preventDefault();
+                    
+                    // Create or toggle dropdown
+                    let dropdown = document.getElementById('user-dropdown');
+                    if (dropdown) {
+                        dropdown.remove();
+                        return;
+                    }
+                    
+                    dropdown = document.createElement('div');
+                    dropdown.id = 'user-dropdown';
+                    dropdown.className = 'absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-50 border border-gray-200 dark:border-gray-700';
+                    dropdown.style.top = '100%';
+                    dropdown.style.position = 'absolute';
+                    
+                    const dropdownContent = `
+                        <div class="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-700">
+                            <div class="font-medium">${currentUser.name}</div>
+                            <div class="text-xs text-gray-500">${currentUser.email}</div>
+                            <div class="text-xs text-green-600 dark:text-green-400">${currentUser.role.charAt(0).toUpperCase() + currentUser.role.slice(1)}</div>
+                        </div>
+                        ${currentUser.role === 'seller' ? 
+                            '<a href="./seller-dashboard.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Seller Dashboard</a>' : 
+                            '<button onclick="upgradeToBuyer()" class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Become a Seller</button>'
+                        }
+                        <button onclick="logoutUser()" class="block w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700">Logout</button>
+                    `;
+                    
+                    dropdown.innerHTML = dropdownContent;
+                    
+                    // Position dropdown relative to button
+                    const btnRect = userBtn.getBoundingClientRect();
+                    userBtn.parentElement.style.position = 'relative';
+                    userBtn.parentElement.appendChild(dropdown);
+                    
+                    // Close dropdown when clicking outside
+                    setTimeout(() => {
+                        document.addEventListener('click', function closeDropdown(e) {
+                            if (!dropdown.contains(e.target) && e.target !== userBtn) {
+                                dropdown.remove();
+                                document.removeEventListener('click', closeDropdown);
+                            }
+                        });
+                    }, 100);
+                };
             } else {
                 userBtn.innerHTML = `<i data-lucide="user" class="w-5 h-5"></i>`;
                 userBtn.onclick = () => openModal(userModal);
@@ -812,201 +1137,316 @@
             lucide.createIcons();
         }
 
-        const userBtn = document.getElementById('user-btn');
-        const cartBtn = document.getElementById('cart-btn');
-        const searchBtn = document.getElementById('search-btn');
-        const userModal = document.getElementById('user-modal');
-        const cartModal = document.getElementById('cart-modal');
-        const searchModal = document.getElementById('search-modal');
-        const closeButtons = document.querySelectorAll('.close-modal');
-        
-        const showSignupBtn = document.getElementById('show-signup');
-        const showLoginBtn = document.getElementById('show-login');
-        const loginForm = document.getElementById('login-form');
-        const signupForm = document.getElementById('signup-form');
-
-        const openModal = (modal) => {
-            modal.classList.remove('opacity-0', 'pointer-events-none');
-            const content = modal.querySelector('.modal-content');
-            if (modal.id === 'cart-modal') {
-                 content.classList.remove('translate-x-full');
-            } else {
-                 content.classList.remove('scale-95');
-            }
-        };
-
-        const closeModal = (modal) => {
-            modal.classList.add('opacity-0', 'pointer-events-none');
-            const content = modal.querySelector('.modal-content');
-            if (modal.id === 'cart-modal') {
-                 content.classList.add('translate-x-full');
-            } else {
-                 content.classList.add('scale-95');
-            }
-        };
-
-        // Event listeners
-        userBtn.addEventListener('click', () => {
-            if (!currentUser) {
-                openModal(userModal);
-            }
-        });
-        
-        cartBtn.addEventListener('click', () => {
-            renderCart();
-            openModal(cartModal);
-        });
-        
-        searchBtn.addEventListener('click', () => openModal(searchModal));
-
-        closeButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                closeModal(userModal);
-                closeModal(cartModal);
-                closeModal(searchModal);
-            });
-        });
-        
-        // Close modal on backdrop click
-        document.querySelectorAll('.modal-backdrop').forEach(modal => {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal(modal);
+        // Function to upgrade current user to seller
+        window.upgradeToBuyer = function() {
+            if (!currentUser) return;
+            
+            const confirmed = confirm('Upgrade your account to seller status?\n\nThis will allow you to list and sell items on our platform.');
+            
+            if (confirmed) {
+                // Update current user
+                currentUser.role = 'seller';
+                currentUser.dateUpgraded = new Date().toISOString();
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // Update in users array
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const userIndex = users.findIndex(u => u.id === currentUser.id);
+                if (userIndex !== -1) {
+                    users[userIndex].role = 'seller';
+                    users[userIndex].dateUpgraded = new Date().toISOString();
+                    localStorage.setItem('users', JSON.stringify(users));
                 }
+                
+                // Update UI
+                updateUserInterface();
+                alert('Congratulations! Your account has been upgraded to seller status.');
+            }
+        };
+
+        // Enhanced dashboard navigation handler
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all links to the seller dashboard
+            const dashboardLinks = document.querySelectorAll('a[href$="seller-dashboard.html"], a[href$="./seller-dashboard.html"]');
+            
+            // Add event listener to each dashboard link
+            dashboardLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Prevent default navigation
+                    e.preventDefault();
+                    
+                    // Get current user from localStorage
+                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                    
+                    console.log('Dashboard link clicked. Current user:', currentUser);
+                    
+                    if (!currentUser) {
+                        // If not logged in, show registration options
+                        const userChoice = confirm('You need to be a registered seller to access the dashboard.\n\nClick OK to register as a seller, or Cancel to login with an existing account.');
+                        
+                        if (userChoice) {
+                            // Redirect to seller registration
+                            window.location.href = './seller-registration.html';
+                        } else {
+                            // Show login modal
+                            openModal(userModal);
+                        }
+                        return;
+                    }
+                    
+                    // Check if user has seller role or create seller profile
+                    if (currentUser.role === 'seller') {
+                        // User is already a seller, navigate to dashboard
+                        console.log('User is seller, navigating to dashboard');
+                        window.location.href = './seller-dashboard.html';
+                    } else {
+                        // User exists but isn't a seller - offer to upgrade account
+                        const upgradeChoice = confirm(`Welcome ${currentUser.name}!\n\nYou need a seller account to access the dashboard.\n\nWould you like to upgrade your account to seller status?`);
+                        
+                        if (upgradeChoice) {
+                            // Upgrade user to seller
+                            currentUser.role = 'seller';
+                            currentUser.dateUpgraded = new Date().toISOString();
+                            
+                            // Update in localStorage
+                            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                            
+                            // Update in users array
+                            const users = JSON.parse(localStorage.getItem('users')) || [];
+                            const userIndex = users.findIndex(u => u.id === currentUser.id);
+                            if (userIndex !== -1) {
+                                users[userIndex].role = 'seller';
+                                users[userIndex].dateUpgraded = new Date().toISOString();
+                                localStorage.setItem('users', JSON.stringify(users));
+                            }
+                            
+                            alert('Your account has been upgraded to seller status!');
+                            
+                            // Navigate to dashboard
+                            window.location.href = './seller-dashboard.html';
+                        } else {
+                            // User declined upgrade
+                            alert('You need seller permissions to access the dashboard. You can upgrade your account anytime by clicking "Become a Seller".');
+                        }
+                    }
+                });
             });
         });
 
-        // Switch between login and signup forms
-        showSignupBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            loginForm.classList.add('hidden');
-            signupForm.classList.remove('hidden');
-        });
-
-        showLoginBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            signupForm.classList.add('hidden');
-            loginForm.classList.remove('hidden');
-        });
-
-        // Handle form submissions with improved validation
-        document.getElementById('login-form-element').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
+        // Enhanced user registration function to handle seller registration
+        function registerUser(name, email, password, role = 'buyer') {
+            // Validate inputs
+            let isValid = true;
             
-            // Hide previous error message
-            document.getElementById('login-error-message').classList.add('hidden');
+            isValid = validateField('signup-name', 'signup-name-error', 
+                value => value.trim().length > 0, 
+                'Name is required') && isValid;
+                
+            isValid = validateField('signup-email', 'signup-email-error', 
+                EmailStorage.isValidEmail, 
+                'Please enter a valid email address') && isValid;
+                
+            isValid = validateField('signup-password', 'signup-password-error', 
+                value => value.length >= 6, 
+                'Password must be at least 6 characters') && isValid;
             
-            loginUser(email, password);
-        });
-
-        document.getElementById('signup-form-element').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('signup-name').value;
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
-            
-            // Hide previous error message
-            document.getElementById('signup-error-message').classList.add('hidden');
-            
-            registerUser(name, email, password);
-        });
-        
-        // Add real-time validation for email fields
-        document.getElementById('login-email').addEventListener('blur', function() {
-            validateField('login-email', 'login-email-error', isValidEmail, 'Please enter a valid email address');
-        });
-        
-        document.getElementById('signup-email').addEventListener('blur', function() {
-            validateField('signup-email', 'signup-email-error', isValidEmail, 'Please enter a valid email address');
-        });
-
-        // Search functionality
-        const searchInput = document.getElementById('search-input');
-        const searchSubmit = document.getElementById('search-submit');
-
-        searchSubmit.addEventListener('click', () => {
-            const query = searchInput.value;
-            searchProducts(query);
-        });
-
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                const query = searchInput.value;
-                searchProducts(query);
-            }
-        });
-
-        // Handle checkout
-        document.getElementById('checkout-btn').addEventListener('click', function() {
-            if (cart.length === 0) {
-                alert('Your cart is empty');
-                return;
-            }
-            
-            if (!currentUser) {
-                alert('Please login to complete your purchase');
-                closeModal(cartModal);
-                openModal(userModal);
-                return;
-            }
-            
-            alert('Order placed successfully! Thank you for your purchase.');
-            cart = [];
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartCount();
-            renderCart();
-            closeModal(cartModal);
-        });
-
-        // Mobile Menu
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // Initialize the page
-        window.onload = function() {
-            renderProducts();
-            renderSecondhandProducts();
-            updateCartCount();
-            updateUserInterface();
-        };
-
-        // Newsletter subscription
-        document.getElementById('newsletter-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('newsletter-email').value;
-            const messageElement = document.getElementById('newsletter-message');
-            
-            messageElement.classList.remove('hidden', 'text-green-500', 'text-red-500');
+            if (!isValid) return false;
             
             try {
-                if (EmailStorage.addSubscriber(email)) {
-                    // Success
-                    messageElement.textContent = "Thank you for subscribing!";
-                    messageElement.classList.add('text-green-500');
-                    document.getElementById('newsletter-email').value = '';
-                } else {
-                    // Already subscribed
-                    messageElement.textContent = "You're already subscribed!";
-                    messageElement.classList.add('text-green-500');
+                // Try to add the user using EmailStorage
+                const result = EmailStorage.addUser(name, email, password, role);
+                
+                if (!result) {
+                    const errorMsg = document.getElementById('signup-error-message');
+                    errorMsg.textContent = 'User with this email already exists';
+                    errorMsg.classList.remove('hidden');
+                    return false;
                 }
+                
+                // Log in the new user
+                loginUser(email, password);
+                return true;
             } catch (error) {
-                // Invalid email
-                messageElement.textContent = "Please enter a valid email address.";
-                messageElement.classList.add('text-red-500');
+                const errorMsg = document.getElementById('signup-error-message');
+                errorMsg.textContent = error.message;
+                errorMsg.classList.remove('hidden');
+                return false;
+            }
+        }
+
+        // Enhanced login function to handle seller access
+        function loginUser(email, password) {
+            // Validate inputs
+            let isValid = true;
+            
+            isValid = validateField('login-email', 'login-email-error', 
+                EmailStorage.isValidEmail, 
+                'Please enter a valid email address') && isValid;
+                
+            isValid = validateField('login-password', 'login-password-error', 
+                value => value.trim().length > 0, 
+                'Password is required') && isValid;
+            
+            if (!isValid) return false;
+            
+            const user = EmailStorage.verifyUser(email, password);
+            
+            if (user) {
+                // Store user info in localStorage (excluding password)
+                currentUser = {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    role: user.role || 'buyer' // Default to buyer if no role specified
+                };
+                
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                alert(`Welcome back, ${user.name}!`);
+                closeModal(userModal);
+                updateUserInterface();
+                return true;
+            } else {
+                const errorMsg = document.getElementById('login-error-message');
+                errorMsg.classList.remove('hidden');
+                return false;
+            }
+        }
+
+        // User logout
+        function logoutUser() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            updateUserInterface();
+            alert('You have been logged out');
+        }
+
+        // Update UI based on user login status
+        function updateUserInterface() {
+            const userBtn = document.getElementById('user-btn');
+            
+            if (currentUser) {
+                const displayName = currentUser.name.split(' ')[0];
+                const roleIcon = currentUser.role === 'seller' ? 'store' : 'user-check';
+                
+                userBtn.innerHTML = `
+                    <span class="text-sm mr-2">${displayName}</span>
+                    <i data-lucide="${roleIcon}" class="w-5 h-5"></i>
+                `;
+                
+                // Create dropdown menu for logged in users
+                userBtn.onclick = function(e) {
+                    e.preventDefault();
+                    
+                    // Create or toggle dropdown
+                    let dropdown = document.getElementById('user-dropdown');
+                    if (dropdown) {
+                        dropdown.remove();
+                        return;
+                    }
+                    
+                    dropdown = document.createElement('div');
+                    dropdown.id = 'user-dropdown';
+                    dropdown.className = 'absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-50 border border-gray-200 dark:border-gray-700';
+                    dropdown.style.top = '100%';
+                    dropdown.style.position = 'absolute';
+                    
+                    const dropdownContent = `
+                        <div class="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-700">
+                            <div class="font-medium">${currentUser.name}</div>
+                            <div class="text-xs text-gray-500">${currentUser.email}</div>
+                            <div class="text-xs text-green-600 dark:text-green-400">${currentUser.role.charAt(0).toUpperCase() + currentUser.role.slice(1)}</div>
+                        </div>
+                        ${currentUser.role === 'seller' ? 
+                            '<a href="./seller-dashboard.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Seller Dashboard</a>' : 
+                            '<button onclick="upgradeToBuyer()" class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Become a Seller</button>'
+                        }
+                        <button onclick="logoutUser()" class="block w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700">Logout</button>
+                    `;
+                    
+                    dropdown.innerHTML = dropdownContent;
+                    
+                    // Position dropdown relative to button
+                    const btnRect = userBtn.getBoundingClientRect();
+                    userBtn.parentElement.style.position = 'relative';
+                    userBtn.parentElement.appendChild(dropdown);
+                    
+                    // Close dropdown when clicking outside
+                    setTimeout(() => {
+                        document.addEventListener('click', function closeDropdown(e) {
+                            if (!dropdown.contains(e.target) && e.target !== userBtn) {
+                                dropdown.remove();
+                                document.removeEventListener('click', closeDropdown);
+                            }
+                        });
+                    }, 100);
+                };
+            } else {
+                userBtn.innerHTML = `<i data-lucide="user" class="w-5 h-5"></i>`;
+                userBtn.onclick = () => openModal(userModal);
             }
             
-            messageElement.classList.remove('hidden');
+            // Re-initialize icons
+            lucide.createIcons();
+        }
+
+        // Function to upgrade current user to seller
+        window.upgradeToBuyer = function() {
+            if (!currentUser) return;
             
-            // Hide message after 3 seconds
-            setTimeout(() => {
-                messageElement.classList.add('hidden');
-            }, 3000);
-        });
+            const confirmed = confirm('Upgrade your account to seller status?\n\nThis will allow you to list and sell items on our platform.');
+            
+            if (confirmed) {
+                // Update current user
+                currentUser.role = 'seller';
+                currentUser.dateUpgraded = new Date().toISOString();
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // Update in users array
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const userIndex = users.findIndex(u => u.id === currentUser.id);
+                if (userIndex !== -1) {
+                    users[userIndex].role = 'seller';
+                    users[userIndex].dateUpgraded = new Date().toISOString();
+                    localStorage.setItem('users', JSON.stringify(users));
+                }
+                
+                // Update UI
+                updateUserInterface();
+                alert('Congratulations! Your account has been upgraded to seller status.');
+            }
+        };
+
+        // Initialize the page with all enhancements
+        window.onload = function() {
+            renderProducts();
+            
+            console.log("Loading secondhand products...");
+            try {
+                renderSecondhandProducts();
+            } catch (err) {
+                console.error("Failed to load secondhand products:", err);
+            }
+            
+            updateCartCount();
+            updateUserInterface();
+            animateSections();
+            
+            // Add a path verification check for dashboard
+            console.log("Checking dashboard path...");
+            fetch('./seller-dashboard.html', { method: 'HEAD' })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("Dashboard file is accessible ✅");
+                    } else {
+                        console.error("Dashboard file not found! Status:", response.status);
+                        // Create a fallback if dashboard is not found
+                        console.log("Creating dashboard fallback...");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error checking dashboard file:", error);
+                });
+        };
     </script>
 </body>
 </html>
