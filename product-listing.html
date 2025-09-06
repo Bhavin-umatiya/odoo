@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List a Product - EcoFinds</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="index.html" class="text-3xl font-bold text-green-600">EcoFinds</a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-green-600 transition">Home</a>
+                    <a href="seller-dashboard.html" class="text-gray-600 hover:text-green-600 transition">Dashboard</a>
+                    <a href="product-listing.html" class="text-green-600 font-medium">List a Product</a>
+                    <a href="#" id="seller-name" class="text-gray-600 hover:text-green-600 transition"></a>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-gray-600 hover:text-green-600">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <a href="index.html" class="block py-3 px-4 text-gray-600 hover:bg-gray-100 hover:text-green-600 transition">Home</a>
+            <a href="seller-dashboard.html" class="block py-3 px-4 text-gray-600 hover:bg-gray-100 hover:text-green-600 transition">Dashboard</a>
+            <a href="product-listing.html" class="block py-3 px-4 text-gray-600 hover:bg-gray-100 hover:text-green-600 transition">List a Product</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12 max-w-4xl">
+        <div class="text-center mb-12">
+            <h1 class="text-3xl font-bold mb-4">List Your Product</h1>
+            <p class="text-gray-600">Share your sustainable or second-hand items with eco-conscious buyers</p>
+        </div>
+        
+        <div class="bg-white shadow-md rounded-lg p-8">
+            <form id="product-form" class="space-y-6">
+                <div>
+                    <h2 class="text-xl font-semibold border-b pb-2 mb-4">Basic Information</h2>
+                    
+                    <div>
+                        <label for="product-title" class="block text-sm font-medium text-gray-700 mb-1">Product Title</label>
+                        <input type="text" id="product-title" name="title" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="product-category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                    <select id="product-category" name="category" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                        <option value="">Select a category</option>
+                        <option value="clothing">Clothing & Accessories</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="home">Home & Garden</option>
+                        <option value="beauty">Beauty & Personal Care</option>
+                        <option value="books">Books & Media</option>
+                        <option value="toys">Toys & Games</option>
+                        <option value="sports">Sports & Outdoors</option>
+                        <option value="automotive">Automotive</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="product-description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                    <textarea id="product-description" name="description" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label for="product-price" class="block text-sm font-medium text-gray-700 mb-1">Price ($)</label>
+                        <input type="number" id="product-price" name="price" min="0.01" step="0.01" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                    
+                    <div>
+                        <label for="product-quantity" class="block text-sm font-medium text-gray-700 mb-1">Quantity Available</label>
+                        <input type="number" id="product-quantity" name="quantity" min="1" step="1" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                    
+                    <div>
+                        <label for="product-condition" class="block text-sm font-medium text-gray-700 mb-1">Condition</label>
+                        <select id="product-condition" name="condition" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            <option value="">Select condition</option>
+                            <option value="new">New</option>
+                            <option value="like-new">Like New</option>
+                            <option value="very-good">Very Good</option>
+                            <option value="good">Good</option>
+                            <option value="acceptable">Acceptable</option>
+                            <option value="for-parts">For Parts/Not Working</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="text-xl font-semibold border-b pb-2 mb-4">Product Details</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="product-brand" class="block text-sm font-medium text-gray-700 mb-1">Brand (if applicable)</label>
+                            <input type="text" id="product-brand" name="brand" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                        </div>
+                        
+                        <div>
+                            <label for="product-model" class="block text-sm font-medium text-gray-700 mb-1">Model (if applicable)</label>
+                            <input type="text" id="product-model" name="model" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="product-color" class="block text-sm font-medium text-gray-700 mb-1">Color</label>
+                            <input type="text" id="product-color" name="color" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                        </div>
+                        
+                        <div>
+                            <label for="product-size" class="block text-sm font-medium text-gray-700 mb-1">Size (if applicable)</label>
+                            <input type="text" id="product-size" name="size" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="product-materials" class="block text-sm font-medium text-gray-700 mb-1">Materials</label>
+                    <input type="text" id="product-materials" name="materials" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+
+                <div>
+                    <h2 class="text-xl font-semibold border-b pb-2 mb-4">Sustainable Features</h2>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <input type="checkbox" id="eco-secondhand" name="ecoFeatures" value="secondhand" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                            <label for="eco-secondhand" class="ml-2 block text-sm text-gray-700">Second-hand/Pre-owned</label>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <input type="checkbox" id="eco-recycled" name="ecoFeatures" value="recycled" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                            <label for="eco-recycled" class="ml-2 block text-sm text-gray-700">Made from recycled materials</label>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <input type="checkbox" id="eco-organic" name="ecoFeatures" value="organic" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                            <label for="eco-organic" class="ml-2 block text-sm text-gray-700">Organic materials</label>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <input type="checkbox" id="eco-biodegradable" name="ecoFeatures" value="biodegradable" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                            <label for="eco-biodegradable" class="ml-2 block text-sm text-gray-700">Biodegradable</label>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <input type="checkbox" id="eco-fairtrade" name="ecoFeatures" value="fairtrade" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                            <label for="eco-fairtrade" class="ml-2 block text-sm text-gray-700">Fair trade certified</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="text-xl font-semibold border-b pb-2 mb-4">Product Images</h2>
+                    
+                    <div class="mt-2 border-2 border-gray-300 border-dashed rounded-md p-6 text-center">
+                        <div class="space-y-1 text-center">
+                            <i data-lucide="upload" class="mx-auto h-12 w-12 text-gray-400"></i>
+                            <div class="flex text-sm text-gray-600 justify-center">
+                                <label for="product-images" class="relative cursor-pointer bg-white rounded-md font-medium text-green-600 hover:text-green-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-green-500">
+                                    <span>Upload images</span>
+                                    <input id="product-images" name="images" type="file" class="sr-only" multiple accept="image/*">
+                                </label>
+                                <p class="pl-1">or drag and drop</p>
+                            </div>
+                            <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                        </div>
+                        <div id="image-preview" class="grid grid-cols-3 gap-4 mt-4"></div>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2">Upload at least one image of your product. You can upload up to 5 images.</p>
+                </div>
+
+                <div>
+                    <h2 class="text-xl font-semibold border-b pb-2 mb-4">Shipping Options</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="shipping-fee" class="block text-sm font-medium text-gray-700 mb-1">Shipping Fee ($)</label>
+                            <input type="number" id="shipping-fee" name="shippingFee" min="0" step="0.01" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                        </div>
+                        
+                        <div>
+                            <label for="shipping-time" class="block text-sm font-medium text-gray-700 mb-1">Processing Time (days)</label>
+                            <input type="number" id="shipping-time" name="shippingTime" min="1" step="1" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Shipping Methods</label>
+                        
+                        <div class="space-y-2">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="shipping-standard" name="shippingMethods" value="standard" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded" checked>
+                                <label for="shipping-standard" class="ml-2 block text-sm text-gray-700">Standard Shipping</label>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <input type="checkbox" id="shipping-express" name="shippingMethods" value="express" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                                <label for="shipping-express" class="ml-2 block text-sm text-gray-700">Express Shipping (additional fee may apply)</label>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <input type="checkbox" id="shipping-local" name="shippingMethods" value="local" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                                <label for="shipping-local" class="ml-2 block text-sm text-gray-700">Local Pickup</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition">List Product</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-16">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">EcoFinds</h3>
+                    <p class="text-gray-400">Your one-stop shop for sustainable products.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="seller-dashboard.html" class="text-gray-400 hover:text-white transition">Dashboard</a></li>
+                        <li><a href="product-listing.html" class="text-gray-400 hover:text-white transition">List a Product</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                    <p class="text-gray-400">Email: info@ecofinds.com</p>
+                    <p class="text-gray-400">Phone: (123) 456-7890</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-500 text-sm">
+                <p>&copy; 2023 EcoFinds. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize icons
+        lucide.createIcons();
+        
+        // Check if user is logged in
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser || currentUser.role !== 'seller') {
+            alert('You must be logged in as a seller to access this page.');
+            window.location.href = 'seller-registration.html';
+        }
+        
+        // Display seller name
+        document.getElementById('seller-name').textContent = currentUser.firstName + ' ' + currentUser.lastName;
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Image preview
+        document.getElementById('product-images').addEventListener('change', function(event) {
+            const preview = document.getElementById('image-preview');
+            preview.innerHTML = '';
+            
+            if (this.files) {
+                // Limit to 5 images
+                const filesToShow = Array.from(this.files).slice(0, 5);
+                
+                filesToShow.forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const imgContainer = document.createElement('div');
+                        imgContainer.className = 'relative';
+                        
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.className = 'h-32 w-full object-cover rounded';
+                        
+                        imgContainer.appendChild(img);
+                        preview.appendChild(imgContainer);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        });
+        
+        // Form submission
+        document.getElementById('product-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Gather form data
+            const formData = new FormData(this);
+            
+            // Get selected eco features
+            const ecoFeatures = [];
+            document.querySelectorAll('input[name="ecoFeatures"]:checked').forEach(checkbox => {
+                ecoFeatures.push(checkbox.value);
+            });
+            
+            // Get selected shipping methods
+            const shippingMethods = [];
+            document.querySelectorAll('input[name="shippingMethods"]:checked').forEach(checkbox => {
+                shippingMethods.push(checkbox.value);
+            });
+            
+            // Create product object
+            const productData = {
+                id: Date.now(),
+                sellerId: currentUser.id,
+                sellerName: currentUser.firstName + ' ' + currentUser.lastName,
+                title: formData.get('title'),
+                category: formData.get('category'),
+                description: formData.get('description'),
+                price: parseFloat(formData.get('price')),
+                quantity: parseInt(formData.get('quantity')),
+                condition: formData.get('condition'),
+                brand: formData.get('brand'),
+                model: formData.get('model'),
+                color: formData.get('color'),
+                size: formData.get('size'),
+                materials: formData.get('materials'),
+                ecoFeatures: ecoFeatures,
+                shippingFee: parseFloat(formData.get('shippingFee')),
+                shippingTime: parseInt(formData.get('shippingTime')),
+                shippingMethods: shippingMethods,
+                dateAdded: new Date().toISOString(),
+                status: 'active'
+            };
+            
+            // In a real app, you would upload images to a server
+            // Here we'll just note how many images were selected
+            const imageInput = document.getElementById('product-images');
+            productData.imageCount = Math.min(imageInput.files.length, 5);
+            
+            // Save product to local storage
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            products.push(productData);
+            localStorage.setItem('products', JSON.stringify(products));
+            
+            // Show success message and redirect
+            alert('Product listed successfully!');
+            window.location.href = 'seller-dashboard.html';
+        });
+    </script>
+</body>
+</html>

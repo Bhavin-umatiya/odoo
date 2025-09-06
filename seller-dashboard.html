@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard - EcoFinds</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="emailStorage.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="index.html" class="text-3xl font-bold text-green-600">EcoFinds</a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-green-600 transition">Home</a>
+                    <a href="seller-dashboard.html" class="text-green-600 font-medium">Dashboard</a>
+                    <a href="#" id="add-product-link" class="text-gray-600 hover:text-green-600 transition">List a Product</a>
+                    <a href="#" id="logout-nav" class="text-gray-600 hover:text-green-600 transition">Logout</a>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-gray-600 hover:text-green-600">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <a href="index.html" class="block py-3 px-4 text-gray-600 hover:bg-gray-100 hover:text-green-600 transition">Home</a>
+            <a href="seller-dashboard.html" class="block py-3 px-4 text-gray-600 hover:bg-gray-100 hover:text-green-600 transition">Dashboard</a>
+            <a href="#" id="mobile-add-product" class="block py-3 px-4 text-gray-600 hover:bg-gray-100 hover:text-green-600 transition">List a Product</a>
+            <a href="#" id="mobile-logout" class="block py-3 px-4 text-gray-600 hover:bg-gray-100 hover:text-green-600 transition">Logout</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <!-- Sidebar Navigation -->
+            <div class="md:col-span-1">
+                <div class="bg-white shadow rounded-lg p-4 sticky top-24">
+                    <div class="mb-6 text-center">
+                        <h2 class="text-xl font-bold" id="user-name">Seller Name</h2>
+                        <p class="text-gray-500 text-sm" id="user-email">seller@example.com</p>
+                    </div>
+                    
+                    <h3 class="text-sm font-medium text-gray-500 uppercase mb-3">Dashboard</h3>
+                    <nav class="flex flex-col space-y-1">
+                        <button data-tab="overview" class="tab-button text-left py-2 px-3 rounded transition bg-green-50 text-green-700">
+                            <i data-lucide="layout-dashboard" class="inline w-5 h-5 mr-2"></i>
+                            Overview
+                        </button>
+                        <button data-tab="products" class="tab-button text-left py-2 px-3 rounded transition hover:bg-gray-100">
+                            <i data-lucide="package" class="inline w-5 h-5 mr-2"></i>
+                            My Products
+                        </button>
+                        <button data-tab="orders" class="tab-button text-left py-2 px-3 rounded transition hover:bg-gray-100">
+                            <i data-lucide="shopping-bag" class="inline w-5 h-5 mr-2"></i>
+                            Orders
+                        </button>
+                        <button data-tab="settings" class="tab-button text-left py-2 px-3 rounded transition hover:bg-gray-100">
+                            <i data-lucide="settings" class="inline w-5 h-5 mr-2"></i>
+                            Settings
+                        </button>
+                    </nav>
+                </div>
+            </div>
+            
+            <!-- Main Content Area -->
+            <div class="md:col-span-3">
+                <!-- Overview Tab -->
+                <div id="overview-tab" class="tab-content active">
+                    <div class="bg-white shadow rounded-lg p-6 mb-6">
+                        <h1 class="text-2xl font-bold mb-4">Welcome to your Dashboard</h1>
+                        <p class="text-gray-600">Manage your sustainable and second-hand products all in one place.</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
+                        <!-- Stats Card -->
+                        <div class="bg-white shadow rounded-lg p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">Active Listings</p>
+                                    <p class="text-2xl font-bold" id="active-listings-count">0</p>
+                                </div>
+                                <div class="p-3 rounded-full bg-green-50 text-green-600">
+                                    <i data-lucide="package" class="w-6 h-6"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Stats Card -->
+                        <div class="bg-white shadow rounded-lg p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">Total Orders</p>
+                                    <p class="text-2xl font-bold">0</p>
+                                </div>
+                                <div class="p-3 rounded-full bg-blue-50 text-blue-600">
+                                    <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Stats Card -->
+                        <div class="bg-white shadow rounded-lg p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">Total Revenue</p>
+                                    <p class="text-2xl font-bold">$0.00</p>
+                                </div>
+                                <div class="p-3 rounded-full bg-purple-50 text-purple-600">
+                                    <i data-lucide="dollar-sign" class="w-6 h-6"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white shadow rounded-lg p-6 mb-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-lg font-semibold">Recent Products</h2>
+                            <button id="add-product-btn" class="text-green-600 hover:text-green-700 text-sm font-medium flex items-center">
+                                <i data-lucide="plus-circle" class="w-5 h-5 mr-1"></i> Add New Product
+                            </button>
+                        </div>
+                        
+                        <div id="recent-products" class="space-y-4">
+                            <div class="text-center text-gray-500 py-8">
+                                You haven't added any products yet.<br>
+                                <button id="add-first-product" class="mt-2 text-green-600 font-medium hover:underline">Add your first product</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white shadow rounded-lg p-6">
+                        <h2 class="text-lg font-semibold mb-6">Recent Orders</h2>
+                        <div class="text-center text-gray-500 py-8">
+                            No orders yet.
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Products Tab -->
+                <div id="products-tab" class="tab-content">
+                    <div class="bg-white shadow rounded-lg p-6 mb-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h1 class="text-2xl font-bold">My Products</h1>
+                            <button id="products-add-btn" class="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition flex items-center">
+                                <i data-lucide="plus" class="w-5 h-5 mr-1"></i> Add Product
+                            </button>
+                        </div>
+                        
+                        <div id="products-list" class="space-y-4">
+                            <!-- Products will be listed here -->
+                            <div class="text-center text-gray-500 py-8">
+                                You haven't added any products yet.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Orders Tab -->
+                <div id="orders-tab" class="tab-content">
+                    <div class="bg-white shadow rounded-lg p-6 mb-6">
+                        <h1 class="text-2xl font-bold mb-6">Orders</h1>
+                        
+                        <div class="text-center text-gray-500 py-8">
+                            You don't have any orders yet.
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Settings Tab -->
+                <div id="settings-tab" class="tab-content">
+                    <div class="bg-white shadow rounded-lg p-6 mb-6">
+                        <h1 class="text-2xl font-bold mb-6">Account Settings</h1>
+                        
+                        <form id="settings-form" class="space-y-6">
+                            <div>
+                                <label for="settings-name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                <input type="text" id="settings-name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            </div>
+                            
+                            <div>
+                                <label for="settings-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <input type="email" id="settings-email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50" disabled>
+                                <p class="text-xs text-gray-500 mt-1">Email address cannot be changed</p>
+                            </div>
+                            
+                            <div>
+                                <button type="submit" class="bg-green-600 text-white py-2 px-6 rounded-lg hover:bg-green-700 transition">Save Changes</button>
+                            </div>
+                        </form>
+                        
+                        <div class="mt-12 pt-8 border-t">
+                            <h2 class="text-lg font-semibold text-red-600 mb-4">Danger Zone</h2>
+                            <button id="delete-account-btn" class="border border-red-600 text-red-600 py-2 px-6 rounded-lg hover:bg-red-50 transition">Delete Account</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-16">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">EcoFinds</h3>
+                    <p class="text-gray-400">Your one-stop shop for sustainable products.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">About</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                    <p class="text-gray-400">Email: info@ecofinds.com</p>
+                    <p class="text-gray-400">Phone: (123) 456-7890</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-500 text-sm">
+                <p>&copy; 2023 EcoFinds. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Add Product Modal -->
+    <div id="add-product-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">Add New Product</h2>
+                <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            
+            <form id="add-product-form" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="product-title" class="block text-sm font-medium text-gray-700 mb-1">Product Title</label>
+                        <input type="text" id="product-title" name="title" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                    <div>
+                        <label for="product-category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                        <select id="product-category" name="category" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            <option value="">Select a category</option>
+                            <option value="clothing">Clothing & Accessories</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="home">Home & Garden</option>
+                            <option value="beauty">Beauty & Personal Care</option>
+                            <option value="toys">Toys & Games</option>
+                            <option value="books">Books & Media</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="product-description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                    <textarea id="product-description" name="description" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required></textarea>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label for="product-price" class="block text-sm font-medium text-gray-700 mb-1">Price ($)</label>
+                        <input type="number" id="product-price" name="price" step="0.01" min="0.01" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                    <div>
+                        <label for="product-quantity" class="block text-sm font-medium text-gray-700 mb-1">Quantity</label>
+                        <input type="number" id="product-quantity" name="quantity" min="1" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                    <div>
+                        <label for="product-condition" class="block text-sm font-medium text-gray-700 mb-1">Condition</label>
+                        <select id="product-condition" name="condition" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            <option value="">Select condition</option>
+                            <option value="new">New</option>
+                            <option value="like-new">Like New</option>
+                            <option value="very-good">Very Good</option>
+                            <option value="good">Good</option>
+                            <option value="fair">Fair</option>
+                            <option value="salvage">For Parts/Not Working</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="flex items-center">
+                    <input type="checkbox" id="product-secondhand" name="secondhand" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded" checked>
+                    <label for="product-secondhand" class="ml-2 block text-sm text-gray-700">This is a second-hand/used item</label>
+                </div>
+                
+                <!-- Add product image upload section -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Product Images</label>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
+                            <div id="image-preview-container" class="mb-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                                <p class="col-span-full text-gray-500 py-8">No images selected</p>
+                            </div>
+                            <label for="product-images" class="cursor-pointer inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                                <i data-lucide="upload" class="w-5 h-5 mr-2"></i>
+                                Upload Images
+                                <input type="file" id="product-images" name="productImages" class="hidden" accept="image/*" multiple>
+                            </label>
+                            <p class="text-xs text-gray-500 mt-2">Upload up to 5 product images (JPG, PNG, GIF. Max 2MB each).</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="border-t pt-6">
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" id="cancel-product" class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition">Cancel</button>
+                        <button type="submit" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">Add Product</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Initialize icons
+        lucide.createIcons();
+        
+        // Check if user is logged in as a seller
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser) {
+            alert('You must be logged in to access this page');
+            window.location.href = 'index.html';
+        } else if (currentUser.role !== 'seller') {
+            alert('Only sellers can access the dashboard');
+            window.location.href = 'index.html';
+        }
+        
+        // Update user information in UI
+        document.getElementById('user-name').textContent = currentUser.name;
+        document.getElementById('user-email').textContent = currentUser.email;
+        
+        // Settings form
+        const settingsForm = document.getElementById('settings-form');
+        if (settingsForm) {
+            document.getElementById('settings-name').value = currentUser.name;
+            document.getElementById('settings-email').value = currentUser.email;
+            
+            settingsForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const newName = document.getElementById('settings-name').value;
+                
+                // Update user in localStorage
+                currentUser.name = newName;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // Update users array in localStorage
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const userIndex = users.findIndex(u => u.id === currentUser.id);
+                if (userIndex !== -1) {
+                    users[userIndex].name = newName;
+                    localStorage.setItem('users', JSON.stringify(users));
+                }
+                
+                // Update UI
+                document.getElementById('user-name').textContent = newName;
+                alert('Settings updated successfully');
+            });
+        }
+        
+        // Tab switching functionality
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabName = button.getAttribute('data-tab');
+                
+                // Hide all tabs
+                tabContents.forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // Remove active class from all buttons
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('bg-green-50', 'text-green-700');
+                    btn.classList.add('hover:bg-gray-100');
+                });
+                
+                // Show the selected tab
+                document.getElementById(`${tabName}-tab`).classList.add('active');
+                
+                // Style the active button
+                button.classList.add('bg-green-50', 'text-green-700');
+                button.classList.remove('hover:bg-gray-100');
+            });
+        });
+        
+        // Get products for current seller
+        function getSellerProducts() {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            return products.filter(product => product.sellerId === currentUser.id);
+        }
+        
+        // Update products display
+        function updateProductsDisplay() {
+            const products = getSellerProducts();
+            document.getElementById('active-listings-count').textContent = products.length;
+            
+            // Update recent products on overview
+            const recentProductsEl = document.getElementById('recent-products');
+            
+            if (products.length > 0) {
+                recentProductsEl.innerHTML = '';
+                
+                // Get the 3 most recent products
+                const recentProducts = [...products].sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded)).slice(0, 3);
+                
+                recentProducts.forEach(product => {
+                    // Use the first image as the product thumbnail if available
+                    const imageUrl = product.images && product.images.length > 0 
+                        ? product.images[0].data 
+                        : 'https://placehold.co/200x200/e2e8f0/64748b?text=No+Image';
+                    
+                    recentProductsEl.innerHTML += `
+                        <div class="flex items-center border-b border-gray-100 pb-4">
+                            <div class="w-16 h-16 rounded-lg overflow-hidden mr-4">
+                                <img src="${imageUrl}" alt="${product.title}" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-medium">${product.title}</h3>
+                                <p class="text-sm text-gray-500">${product.category} • ${product.condition}</p>
+                                <p class="text-green-600 font-medium">$${product.price.toFixed(2)}</p>
+                            </div>
+                            <div>
+                                <button class="text-gray-400 hover:text-gray-600" data-product-id="${product.id}">
+                                    <i data-lucide="more-vertical" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                recentProductsEl.innerHTML = `
+                    <div class="text-center text-gray-500 py-8">
+                        You haven't added any products yet.<br>
+                        <button id="add-first-product" class="mt-2 text-green-600 font-medium hover:underline">Add your first product</button>
+                    </div>
+                `;
+                
+                // Add event listener for the "add first product" button
+                const addFirstProductBtn = document.getElementById('add-first-product');
+                if (addFirstProductBtn) {
+                    addFirstProductBtn.addEventListener('click', openAddProductModal);
+                }
+            }
+            
+            // Update products list tab
+            const productsListEl = document.getElementById('products-list');
+            
+            if (products.length > 0) {
+                productsListEl.innerHTML = '';
+                
+                products.forEach(product => {
+                    // Use the first image as the product thumbnail if available
+                    const imageUrl = product.images && product.images.length > 0 
+                        ? product.images[0].data 
+                        : 'https://placehold.co/200x200/e2e8f0/64748b?text=No+Image';
+                    
+                    productsListEl.innerHTML += `
+                        <div class="border rounded-lg p-4 flex flex-wrap md:flex-nowrap">
+                            <div class="w-full md:w-24 h-24 rounded-lg overflow-hidden mb-4 md:mb-0 md:mr-4">
+                                <img src="${imageUrl}" alt="${product.title}" class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-medium">${product.title}</h3>
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm text-gray-600 mt-2">
+                                    <div>
+                                        <span class="block text-xs text-gray-500">Category</span>
+                                        ${product.category}
+                                    </div>
+                                    <div>
+                                        <span class="block text-xs text-gray-500">Condition</span>
+                                        ${product.condition}
+                                    </div>
+                                    <div>
+                                        <span class="block text-xs text-gray-500">Price</span>
+                                        $${product.price.toFixed(2)}
+                                    </div>
+                                    <div>
+                                        <span class="block text-xs text-gray-500">Quantity</span>
+                                        ${product.quantity}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-full md:w-auto flex md:flex-col space-y-0 md:space-y-2 space-x-2 md:space-x-0 mt-4 md:mt-0 justify-end">
+                                <button class="text-blue-600 hover:text-blue-800 edit-product" data-product-id="${product.id}">
+                                    <i data-lucide="edit" class="w-5 h-5"></i>
+                                </button>
+                                <button class="text-red-600 hover:text-red-800 delete-product" data-product-id="${product.id}">
+                                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                // Reinitialize icons for the new elements
+                lucide.createIcons();
+                
+                // Add event listeners for edit/delete buttons
+                document.querySelectorAll('.edit-product').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const productId = this.getAttribute('data-product-id');
+                        // Edit functionality would go here
+                        alert(`Edit product ${productId}`);
+                    });
+                });
+                
+                document.querySelectorAll('.delete-product').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const productId = this.getAttribute('data-product-id');
+                        if (confirm('Are you sure you want to delete this product?')) {
+                            deleteProduct(productId);
+                        }
+                    });
+                });
+                
+            } else {
+                productsListEl.innerHTML = `
+                    <div class="text-center text-gray-500 py-8">
+                        You haven't added any products yet.
+                    </div>
+                `;
+            }
+        }
+        
+        // Function to delete a product
+        function deleteProduct(productId) {
+            let products = JSON.parse(localStorage.getItem('products')) || [];
+            products = products.filter(p => p.id !== parseInt(productId));
+            localStorage.setItem('products', JSON.stringify(products));
+            updateProductsDisplay();
+        }
+        
+        // Add Product Modal
+        const addProductModal = document.getElementById('add-product-modal');
+        const addProductForm = document.getElementById('add-product-form');
+        
+        function openAddProductModal() {
+            addProductModal.classList.remove('hidden');
+        }
+        
+        function closeAddProductModal() {
+            addProductModal.classList.add('hidden');
+            addProductForm.reset();
+        }
+        
+        // Add event listeners for the modal
+        document.getElementById('add-product-btn').addEventListener('click', openAddProductModal);
+        document.getElementById('products-add-btn').addEventListener('click', openAddProductModal);
+        document.getElementById('close-modal').addEventListener('click', closeAddProductModal);
+        document.getElementById('cancel-product').addEventListener('click', closeAddProductModal);
+        
+        // Image preview functionality
+        const productImagesInput = document.getElementById('product-images');
+        const imagePreviewContainer = document.getElementById('image-preview-container');
+        const MAX_IMAGES = 5;
+        let selectedImages = []; // Array to store base64 encoded images
+        
+        productImagesInput.addEventListener('change', function(e) {
+            const files = Array.from(e.target.files);
+            
+            if (files.length === 0) return;
+            
+            // Limit to 5 images
+            if (files.length > MAX_IMAGES) {
+                alert(`You can upload a maximum of ${MAX_IMAGES} images.`);
+                return;
+            }
+            
+            // Reset the preview and selected images array
+            imagePreviewContainer.innerHTML = '';
+            selectedImages = [];
+            
+            // Process each file
+            files.forEach((file, index) => {
+                // Check file size (2MB max)
+                if (file.size > 2 * 1024 * 1024) {
+                    alert(`Image "${file.name}" exceeds 2MB. Please choose a smaller image.`);
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Create preview element
+                    const previewDiv = document.createElement('div');
+                    previewDiv.className = 'relative';
+                    
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'w-full h-32 object-cover rounded-lg';
+                    img.alt = `Product image ${index + 1}`;
+                    
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center';
+                    removeBtn.innerHTML = '×';
+                    removeBtn.onclick = function(e) {
+                        e.preventDefault();
+                        previewDiv.remove();
+                        selectedImages = selectedImages.filter(img => img.data !== e.target.result);
+                    };
+                    
+                    previewDiv.appendChild(img);
+                    previewDiv.appendChild(removeBtn);
+                    imagePreviewContainer.appendChild(previewDiv);
+                    
+                    // Store the image data
+                    selectedImages.push({
+                        name: file.name,
+                        type: file.type,
+                        data: e.target.result
+                    });
+                };
+                
+                reader.readAsDataURL(file);
+            });
+        });
+        
+        // Add Product Form Submission
+        addProductForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const title = document.getElementById('product-title').value;
+            const category = document.getElementById('product-category').value;
+            const description = document.getElementById('product-description').value;
+            const price = parseFloat(document.getElementById('product-price').value);
+            const quantity = parseInt(document.getElementById('product-quantity').value);
+            const condition = document.getElementById('product-condition').value;
+            const secondhand = document.getElementById('product-secondhand').checked;
+            
+            // Create new product object
+            const newProduct = {
+                id: Date.now(),
+                sellerId: currentUser.id,
+                sellerName: currentUser.name,
+                title,
+                category,
+                description,
+                price,
+                quantity,
+                condition,
+                isSecondhand: secondhand,
+                dateAdded: new Date().toISOString(),
+                images: selectedImages
+            };
+            
+            // Add to products array in localStorage
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            products.push(newProduct);
+            localStorage.setItem('products', JSON.stringify(products));
+            
+            // Update UI
+            updateProductsDisplay();
+            
+            // Reset form and close modal
+            selectedImages = [];
+            closeAddProductModal();
+            
+            // Show success message
+            alert('Product added successfully!');
+        });
+        
+        // Logout functionality
+        function logoutUser() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'index.html';
+        }
+        
+        document.getElementById('logout-nav').addEventListener('click', logoutUser);
+        document.getElementById('mobile-logout').addEventListener('click', logoutUser);
+        
+        // Navigation to add product page
+        document.getElementById('add-product-link').addEventListener('click', openAddProductModal);
+        document.getElementById('mobile-add-product').addEventListener('click', openAddProductModal);
+        
+        // Delete account functionality
+        document.getElementById('delete-account-btn').addEventListener('click', function() {
+            if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                // Remove user from users array
+                let users = JSON.parse(localStorage.getItem('users')) || [];
+                users = users.filter(user => user.id !== currentUser.id);
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                // Remove user's products
+                let products = JSON.parse(localStorage.getItem('products')) || [];
+                products = products.filter(product => product.sellerId !== currentUser.id);
+                localStorage.setItem('products', JSON.stringify(products));
+                
+                // Clear current user and redirect
+                localStorage.removeItem('currentUser');
+                alert('Your account has been deleted.');
+                window.location.href = 'index.html';
+            }
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Initialize page
+        updateProductsDisplay();
+    </script>
+</body>
+</html>

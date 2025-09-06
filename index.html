@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoFinds - Sustainable Shopping</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="emailStorage.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .modal-backdrop {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .modal-content {
+            transition: transform 0.3s ease-in-out;
+        }
+        .secondhand-badge {
+            background-color: rgba(16, 185, 129, 0.9);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#" class="text-3xl font-bold text-green-600">EcoFinds</a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#shop" class="text-gray-600 hover:text-green-600 transition">Shop</a>
+                    <a href="#secondhand" class="text-gray-600 hover:text-green-600 transition">Secondhand</a>
+                    <a href="#about" class="text-gray-600 hover:text-green-600 transition">About</a>
+                    <a href="#contact" class="text-gray-600 hover:text-green-600 transition">Contact</a>
+                </nav>
+
+                <!-- Icons -->
+                <div class="flex items-center space-x-4">
+                    <button id="search-btn" class="text-gray-600 hover:text-green-600">
+                        <i data-lucide="search"></i>
+                    </button>
+                    <button id="user-btn" class="text-gray-600 hover:text-green-600">
+                        <i data-lucide="user"></i>
+                    </button>
+                    <button id="cart-btn" class="relative text-gray-600 hover:text-green-600">
+                        <i data-lucide="shopping-cart"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-green-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </button>
+                    <button id="mobile-menu-btn" class="md:hidden text-gray-600 hover:text-green-600">
+                        <i data-lucide="menu"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <a href="#shop" class="block py-3 px-4 text-gray-600 hover:bg-gray-100 hover:text-green-600 transition">Shop</a>
+            <a href="#secondhand" class="block py-3 px-4 text-gray-600 hover:bg-gray-100 hover:text-green-600 transition">Secondhand</a>
+            <a href="#about" class="block py-3 px-4 text-gray-600 hover:bg-gray-100 hover:text-green-600 transition">About</a>
+            <a href="#contact" class="block py-3 px-4 text-gray-600 hover:bg-gray-100 hover:text-green-600 transition">Contact</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="relative bg-gray-200 h-[60vh] min-h-[400px] flex items-center justify-center text-center">
+            <img src="https://placehold.co/1600x900/A3E635/14532D?text=Sustainable+Products" alt="Eco-friendly products banner" class="absolute inset-0 w-full h-full object-cover opacity-80">
+            <div class="relative z-10 p-4">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">Live Sustainably</h1>
+                <!-- <p class="text-lg md:text-xl text-white mb-8 max-w-2xl mx-auto drop-shadow-md">Discover curated, eco-friendly and secondhand products for a greener lifestyle.</p> -->
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <a href="#shop" class="bg-green-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-700 transition shadow-lg">Shop New</a>
+                    <a href="#secondhand" class="bg-green-700 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-800 transition shadow-lg">Browse Secondhand</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Products Section -->
+        <section id="shop" class="py-16 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-4">Featured Products</h2>
+                <p class="text-center text-gray-600 mb-12 max-w-xl mx-auto">Handpicked items that are kind to you and the planet. Check out what's popular.</p>
+                <div id="featured-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Product cards will be dynamically inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Secondhand Products Section -->
+        <section id="secondhand" class="py-16 sm:py-24 bg-green-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-4">Secondhand Treasures</h2>
+                <p class="text-center text-gray-600 mb-8 max-w-xl mx-auto">
+                    Pre-loved items looking for a new home. Shop sustainably and give these products a second life.
+                </p>
+                
+                <!-- Category Filter -->
+                <div class="flex flex-wrap justify-center mb-10">
+                    <button class="secondhand-category-btn bg-green-600 text-white m-1 px-4 py-2 rounded-full text-sm font-medium" data-category="all">
+                        All Categories
+                    </button>
+                    <button class="secondhand-category-btn bg-white text-gray-700 m-1 px-4 py-2 rounded-full text-sm font-medium hover:bg-green-100 transition" data-category="clothing">
+                        Clothing
+                    </button>
+                    <button class="secondhand-category-btn bg-white text-gray-700 m-1 px-4 py-2 rounded-full text-sm font-medium hover:bg-green-100 transition" data-category="electronics">
+                        Electronics
+                    </button>
+                    <button class="secondhand-category-btn bg-white text-gray-700 m-1 px-4 py-2 rounded-full text-sm font-medium hover:bg-green-100 transition" data-category="home">
+                        Home & Garden
+                    </button>
+                    <button class="secondhand-category-btn bg-white text-gray-700 m-1 px-4 py-2 rounded-full text-sm font-medium hover:bg-green-100 transition" data-category="books">
+                        Books & Media
+                    </button>
+                    <button class="secondhand-category-btn bg-white text-gray-700 m-1 px-4 py-2 rounded-full text-sm font-medium hover:bg-green-100 transition" data-category="toys">
+                        Toys & Games
+                    </button>
+                </div>
+                
+                <!-- Secondhand Products Grid -->
+                <div id="secondhand-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Secondhand products will be displayed here -->
+                    <div class="text-center text-gray-500 py-12 col-span-4">
+                        Loading secondhand products...
+                    </div>
+                </div>
+                
+                <!-- Call to Action for Sellers -->
+                <div class="mt-16 bg-white rounded-lg shadow-md p-8 text-center">
+                    <h3 class="text-2xl font-bold mb-4">Have items to sell?</h3>
+                    <p class="text-gray-600 mb-6 max-w-lg mx-auto">
+                        Join our community of eco-conscious sellers. List your pre-loved items and give them a second life.
+                    </p>
+                    <a href="seller-dashboard.html" class="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition inline-block">
+                        Become a Seller
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Arrivals Section -->
+        <section id="new-arrivals" class="py-16 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-4">New Arrivals</h2>
+                <p class="text-center text-gray-600 mb-12 max-w-xl mx-auto">The latest additions to our collection of sustainable goods. Be the first to try them!</p>
+                <div id="new-arrival-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Product cards will be dynamically inserted here -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- About Section Placeholder -->
+        <section id="about" class="py-16 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                 <h2 class="text-3xl font-bold text-center mb-4">About EcoFinds</h2>
+                 <p class="text-center text-gray-600 max-w-2xl mx-auto">We believe that small changes can make a big impact. EcoFinds was born from a desire to make sustainable living accessible and enjoyable for everyone. We carefully source products that are ethically made, environmentally friendly, and beautifully designed. We also provide a platform for sellers to give their pre-loved items a second life, reducing waste and promoting a circular economy.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-gray-800 text-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- About -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">EcoFinds</h3>
+                    <p class="text-gray-400">Your one-stop shop for a sustainable lifestyle.</p>
+                </div>
+                <!-- Links -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul>
+                        <li class="mb-2"><a href="#shop" class="hover:text-green-400 transition">Shop</a></li>
+                        <li class="mb-2"><a href="#about" class="hover:text-green-400 transition">About Us</a></li>
+                        <li class="mb-2"><a href="#" class="hover:text-green-400 transition">FAQs</a></li>
+                    </ul>
+                </div>
+                <!-- Newsletter -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">Subscribe for updates and special offers.</p>
+                    <form id="newsletter-form" class="flex">
+                        <input type="email" id="newsletter-email" placeholder="Your email" class="w-full rounded-l-md px-4 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <button type="submit" class="bg-green-600 px-4 py-2 rounded-r-md hover:bg-green-700 transition">Go</button>
+                    </form>
+                    <p id="newsletter-message" class="text-xs mt-2 hidden"></p>
+                </div>
+                <!-- Social -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-lucide="facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-lucide="instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-lucide="twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-500 text-sm">
+                <p>&copy; 2025 EcoFinds. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="modal-backdrop fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 opacity-0 pointer-events-none">
+        <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-2xl p-8 transform scale-95">
+            <div class="flex justify-end">
+                <button class="close-modal text-gray-500 hover:text-gray-800">&times;</button>
+            </div>
+            <h2 class="text-2xl font-bold mb-4">Search Products</h2>
+            <div class="relative mb-6">
+                <input type="text" id="search-input" placeholder="Search for products..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                <button id="search-submit" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-green-600">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div id="search-results" class="max-h-96 overflow-y-auto">
+                <!-- Search results will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="modal-backdrop fixed inset-0 bg-black bg-opacity-50 flex justify-end z-50 opacity-0 pointer-events-none">
+        <div class="modal-content bg-white h-full w-full max-w-md shadow-xl transform translate-x-full">
+            <div class="p-6 flex flex-col h-full">
+                <!-- Cart Header -->
+                <div class="flex justify-between items-center pb-4 border-b">
+                    <h2 class="text-2xl font-bold">Your Cart</h2>
+                    <button class="close-modal text-gray-500 hover:text-gray-800">&times;</button>
+                </div>
+                <!-- Cart Items -->
+                <div id="cart-items" class="flex-grow overflow-y-auto py-6">
+                    <!-- Cart items will be dynamically inserted here -->
+                </div>
+                <!-- Cart Footer -->
+                <div class="border-t pt-6">
+                    <div class="flex justify-between font-bold text-lg mb-4">
+                        <span>Subtotal</span>
+                        <span id="cart-subtotal">$0.00</span>
+                    </div>
+                    <button id="checkout-btn" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition">Proceed to Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- User Modal (Login/Signup) -->
+    <div id="user-modal" class="modal-backdrop fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 opacity-0 pointer-events-none">
+        <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-md p-8 transform scale-95">
+            <div class="flex justify-end">
+                <button class="close-modal text-gray-500 hover:text-gray-800">&times;</button>
+            </div>
+            
+            <!-- Login Form -->
+            <div id="login-form">
+                <h2 class="text-2xl font-bold text-center mb-6">Login</h2>
+                <form id="login-form-element">
+                    <div class="mb-4">
+                        <label for="login-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" id="login-email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                        <p id="login-email-error" class="text-red-500 text-xs mt-1 hidden">Please enter a valid email address.</p>
+                    </div>
+                    <div class="mb-6">
+                        <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <input type="password" id="login-password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                        <p id="login-password-error" class="text-red-500 text-xs mt-1 hidden">Password is required.</p>
+                    </div>
+                    <p id="login-error-message" class="text-red-500 text-sm mb-4 hidden text-center">Invalid email or password.</p>
+                    <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition">Login</button>
+                </form>
+                <p class="text-center text-sm text-gray-600 mt-6">
+                    Don't have an account? <a href="#" id="show-signup" class="text-green-600 hover:underline font-medium">Sign up</a>
+                </p>
+            </div>
+
+            <!-- Signup Form (hidden by default) -->
+            <div id="signup-form" class="hidden">
+                <h2 class="text-2xl font-bold text-center mb-6">Sign Up</h2>
+                <form id="signup-form-element">
+                     <div class="mb-4">
+                        <label for="signup-name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                        <input type="text" id="signup-name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                        <p id="signup-name-error" class="text-red-500 text-xs mt-1 hidden">Name is required.</p>
+                    </div>
+                    <div class="mb-4">
+                        <label for="signup-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" id="signup-email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                        <p id="signup-email-error" class="text-red-500 text-xs mt-1 hidden">Please enter a valid email address.</p>
+                    </div>
+                    <div class="mb-6">
+                        <label for="signup-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <input type="password" id="signup-password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required minlength="6">
+                        <p id="signup-password-error" class="text-red-500 text-xs mt-1 hidden">Password must be at least 6 characters.</p>
+                    </div>
+                    <p id="signup-error-message" class="text-red-500 text-sm mb-4 hidden text-center"></p>
+                    <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition">Create Account</button>
+                </form>
+                 <p class="text-center text-sm text-gray-600 mt-6">
+                    Already have an account? <a href="#" id="show-login" class="text-green-600 hover:underline font-medium">Login</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize icons
+        lucide.createIcons();
+
+        // Product Data
+        const products = [
+            {
+                id: 1,
+                name: "Maserati Gold Chronograph Watch",
+                price: 299.99,
+                image: "./product1.jpeg", // Changed to relative path for browser compatibility
+                category: "featured",
+                description: "Elegant gold-tone Maserati chronograph watch with black dial and stainless steel band. Water resistant to 100m."
+            },
+            {
+                id: 2,
+                name: "Organic Cotton Tote",
+                price: 24.50,
+                image: "./product2.jpeg",
+                category: "featured",
+                description: "Airpode and watch"
+            },
+            {
+                id: 3,
+                name: "Glass Water Bottle",
+                price: 29.00,
+                image: "./product3.jpeg",
+                category: "featured",
+                description: "i-phone."
+            },
+            {
+                id: 4,
+                name: "Soy Wax Candle",
+                price: 15.75,
+                image: "./product4.jpeg",
+                category: "featured",
+                description: "Tablet."
+            },
+            {
+                id: 5,
+                name: "Recycled Paper Journal",
+                price: 66.99,
+                image: "./product5.jpeg",
+                category: "new",
+                description: "i Watch."
+            },
+            {
+                id: 6,
+                name: "Beeswax Food Wraps",
+                price: 80.00,
+                image: "./product6.jpeg",
+                category: "new",
+                description: "i-pad"
+            },
+            {
+                id: 7,
+                name: "Compostable Phone Case",
+                price: 35.00,
+                image: "./product7.jpeg",
+                category: "new",
+                description: "Chain."
+            },
+            {
+                id: 8,
+                name: "Solar-Powered Charger",
+                price: 9.99,
+                image: "./product8.jpeg",
+                category: "new",
+                description: "Ring."
+            }
+        ];
+
+        // Get secondhand products from localStorage
+        function getSecondhandProducts() {
+            const allProducts = JSON.parse(localStorage.getItem('products')) || [];
+            return allProducts.filter(product => product.isSecondhand === true);
+        }
+
+        // User Authentication
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+        
+        // Cart functionality
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Update cart count display
+        function updateCartCount() {
+            const cartCount = document.getElementById('cart-count');
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+        }
+
+        // Render product cards
+        function renderProducts() {
+            const featuredContainer = document.getElementById('featured-products');
+            const newArrivalsContainer = document.getElementById('new-arrival-products');
+            
+            featuredContainer.innerHTML = '';
+            newArrivalsContainer.innerHTML = '';
+            
+            products.forEach(product => {
+                const productCard = `
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden group">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300">
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold mb-2">${product.name}</h3>
+                            <p class="text-gray-600 mb-4">$${product.price.toFixed(2)}</p>
+                            <button class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition" onclick="addToCart(${product.id})">Add to Cart</button>
+                        </div>
+                    </div>
+                `;
+                
+                if (product.category === 'featured') {
+                    featuredContainer.innerHTML += productCard;
+                } else if (product.category === 'new') {
+                    newArrivalsContainer.innerHTML += productCard;
+                }
+            });
+        }
+
+        // Render secondhand products
+        function renderSecondhandProducts(category = 'all') {
+            const secondhandContainer = document.getElementById('secondhand-products');
+            const secondhandProducts = getSecondhandProducts();
+            
+            if (secondhandProducts.length === 0) {
+                secondhandContainer.innerHTML = `
+                    <div class="text-center text-gray-500 py-12 col-span-4">
+                        No secondhand products found. Be the first to <a href="seller-dashboard.html" class="text-green-600 hover:underline">list your items</a>!
+                    </div>
+                `;
+                return;
+            }
+            
+            // Filter by category if needed
+            let filteredProducts = secondhandProducts;
+            if (category !== 'all') {
+                filteredProducts = secondhandProducts.filter(product => product.category === category);
+                
+                if (filteredProducts.length === 0) {
+                    secondhandContainer.innerHTML = `
+                        <div class="text-center text-gray-500 py-12 col-span-4">
+                            No secondhand products found in this category.
+                        </div>
+                    `;
+                    return;
+                }
+            }
+            
+            secondhandContainer.innerHTML = '';
+            
+            filteredProducts.forEach(product => {
+                // Get the first image from the product images array if available
+                const imageUrl = product.images && product.images.length > 0 
+                    ? product.images[0].data 
+                    : 'https://placehold.co/400x400/E4F3EA/14532D?text=Secondhand';
+                    
+                const productCard = `
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden group relative">
+                        <span class="secondhand-badge">Secondhand</span>
+                        <img src="${imageUrl}" 
+                            alt="${product.title}" 
+                            class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300">
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold mb-1">${product.title}</h3>
+                            <p class="text-xs text-gray-500 mb-2">
+                                ${product.condition.charAt(0).toUpperCase() + product.condition.slice(1)} Condition
+                            </p>
+                            <p class="text-sm mb-1">
+                                <span class="font-medium">Seller:</span> ${product.sellerName || 'Anonymous'}
+                            </p>
+                            <p class="text-green-600 font-bold mb-4">$${product.price.toFixed(2)}</p>
+                            <button class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition" 
+                                onclick="addSecondhandToCart(${product.id})">Add to Cart</button>
+                        </div>
+                    </div>
+                `;
+                
+                secondhandContainer.innerHTML += productCard;
+            });
+        }
+    
+        // Add secondhand product to cart
+        function addSecondhandToCart(productId) {
+            const products = getSecondhandProducts();
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const existingItem = cart.find(item => item.id === productId && item.isSecondhand);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                const imageUrl = product.images && product.images.length > 0 
+                    ? product.images[0].data 
+                    : 'https://placehold.co/400x400/E4F3EA/14532D?text=Secondhand';
+                    
+                cart.push({
+                    id: product.id,
+                    name: product.title,
+                    price: product.price,
+                    image: imageUrl,
+                    quantity: 1,
+                    isSecondhand: true,
+                    sellerName: product.sellerName,
+                    condition: product.condition
+                });
+            }
+            
+            // Update localStorage and UI
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            renderCart();
+            
+            // Show notification
+            alert(`${product.title} added to cart!`);
+        }
+
+        // Category filter for secondhand products
+        document.querySelectorAll('.secondhand-category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                
+                // Update active button styling
+                document.querySelectorAll('.secondhand-category-btn').forEach(button => {
+                    button.classList.remove('bg-green-600', 'text-white');
+                    button.classList.add('bg-white', 'text-gray-700', 'hover:bg-green-100');
+                });
+                
+                this.classList.remove('bg-white', 'text-gray-700', 'hover:bg-green-100');
+                this.classList.add('bg-green-600', 'text-white');
+                
+                // Render products for selected category
+                renderSecondhandProducts(category);
+            });
+        });
+
+        // Add to cart function
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+            
+            // Update localStorage and UI
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            renderCart();
+            
+            // Show notification
+            alert(`${product.name} added to cart!`);
+        }
+
+        // Render cart items
+        function renderCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartSubtotal = document.getElementById('cart-subtotal');
+            
+            cartItemsContainer.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="text-gray-500 text-center py-8">Your cart is empty</p>';
+                cartSubtotal.textContent = '$0.00';
+                return;
+            }
+            
+            let subtotal = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                cartItemsContainer.innerHTML += `
+                    <div class="flex items-center mb-6">
+                        <img src="${item.image}" alt="${item.name}" class="w-20 h-20 rounded-md object-cover mr-4">
+                        <div class="flex-grow">
+                            <h3 class="font-semibold">${item.name}</h3>
+                            ${item.isSecondhand ? `<p class="text-xs text-green-600">Secondhand • ${item.condition}</p>` : ''}
+                            <div class="flex items-center mt-1">
+                                <button class="bg-gray-200 px-2 rounded" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
+                                <span class="mx-2 text-sm">${item.quantity}</span>
+                                <button class="bg-gray-200 px-2 rounded" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+                            </div>
+                            <p class="font-bold mt-1">$${itemTotal.toFixed(2)}</p>
+                        </div>
+                        <button class="text-red-500 hover:text-red-700" onclick="removeFromCart(${item.id})">
+                            <i data-lucide="trash-2" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                `;
+            });
+            
+            cartSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+            
+            // Re-initialize icons for newly added elements
+            lucide.createIcons();
+        }
+
+        // Update item quantity
+        function updateQuantity(productId, newQuantity) {
+            const itemIndex = cart.findIndex(item => item.id === productId);
+            if (itemIndex === -1) return;
+            
+            if (newQuantity <= 0) {
+                removeFromCart(productId);
+            } else {
+                cart[itemIndex].quantity = newQuantity;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                renderCart();
+            }
+        }
+
+        // Remove from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            renderCart();
+        }
+
+        // Search functionality
+        function searchProducts(query) {
+            query = query.toLowerCase();
+            const results = products.filter(product => 
+                product.name.toLowerCase().includes(query) || 
+                product.description.toLowerCase().includes(query)
+            );
+            
+            const searchResultsContainer = document.getElementById('search-results');
+            searchResultsContainer.innerHTML = '';
+            
+            if (results.length === 0) {
+                searchResultsContainer.innerHTML = '<p class="text-gray-500 text-center py-8">No products found</p>';
+                return;
+            }
+            
+            results.forEach(product => {
+                searchResultsContainer.innerHTML += `
+                    <div class="flex items-center p-4 border-b hover:bg-gray-50">
+                        <img src="${product.image}" alt="${product.name}" class="w-16 h-16 rounded-md object-cover mr-4">
+                        <div class="flex-grow">
+                            <h3 class="font-semibold">${product.name}</h3>
+                            <p class="text-sm text-gray-600">${product.description}</p>
+                            <p class="font-bold mt-1">$${product.price.toFixed(2)}</p>
+                        </div>
+                        <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition" onclick="addToCart(${product.id})">Add</button>
+                    </div>
+                `;
+            });
+        }
+
+        // Email validation function
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        // Form field validation
+        function validateField(fieldId, errorId, validationFn, errorMsg) {
+            const field = document.getElementById(fieldId);
+            const errorElement = document.getElementById(errorId);
+            const isValid = validationFn(field.value);
+            
+            if (!isValid) {
+                field.classList.add('border-red-500');
+                errorElement.classList.remove('hidden');
+                errorElement.textContent = errorMsg;
+            } else {
+                field.classList.remove('border-red-500');
+                errorElement.classList.add('hidden');
+            }
+            
+            return isValid;
+        }
+        
+        // User registration with validation - modified to use EmailStorage
+        function registerUser(name, email, password) {
+            // Validate inputs
+            let isValid = true;
+            
+            isValid = validateField('signup-name', 'signup-name-error', 
+                value => value.trim().length > 0, 
+                'Name is required') && isValid;
+                
+            isValid = validateField('signup-email', 'signup-email-error', 
+                EmailStorage.isValidEmail, 
+                'Please enter a valid email address') && isValid;
+                
+            isValid = validateField('signup-password', 'signup-password-error', 
+                value => value.length >= 6, 
+                'Password must be at least 6 characters') && isValid;
+            
+            if (!isValid) return false;
+            
+            try {
+                // Try to add the user using EmailStorage
+                const result = EmailStorage.addUser(name, email, password);
+                
+                if (!result) {
+                    const errorMsg = document.getElementById('signup-error-message');
+                    errorMsg.textContent = 'User with this email already exists';
+                    errorMsg.classList.remove('hidden');
+                    return false;
+                }
+                
+                // Log in the new user
+                loginUser(email, password);
+                return true;
+            } catch (error) {
+                const errorMsg = document.getElementById('signup-error-message');
+                errorMsg.textContent = error.message;
+                errorMsg.classList.remove('hidden');
+                return false;
+            }
+        }
+
+        // User login with validation - modified to use EmailStorage
+        function loginUser(email, password) {
+            // Validate inputs
+            let isValid = true;
+            
+            isValid = validateField('login-email', 'login-email-error', 
+                EmailStorage.isValidEmail, 
+                'Please enter a valid email address') && isValid;
+                
+            isValid = validateField('login-password', 'login-password-error', 
+                value => value.trim().length > 0, 
+                'Password is required') && isValid;
+            
+            if (!isValid) return false;
+            
+            const user = EmailStorage.verifyUser(email, password);
+            
+            if (user) {
+                // Store user info in localStorage (excluding password)
+                currentUser = {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email
+                };
+                
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                alert(`Welcome back, ${user.name}!`);
+                closeModal(userModal);
+                updateUserInterface();
+                return true;
+            } else {
+                const errorMsg = document.getElementById('login-error-message');
+                errorMsg.classList.remove('hidden');
+                return false;
+            }
+        }
+
+        // User logout
+        function logoutUser() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            updateUserInterface();
+            alert('You have been logged out');
+        }
+
+        // Update UI based on user login status
+        function updateUserInterface() {
+            const userBtn = document.getElementById('user-btn');
+            
+            if (currentUser) {
+                userBtn.innerHTML = `<span class="text-sm mr-2">${currentUser.name.split(' ')[0]}</span><i data-lucide="user-check" class="w-5 h-5"></i>`;
+                // Add a logout option
+                userBtn.onclick = logoutUser;
+            } else {
+                userBtn.innerHTML = `<i data-lucide="user" class="w-5 h-5"></i>`;
+                userBtn.onclick = () => openModal(userModal);
+            }
+            
+            // Re-initialize icons
+            lucide.createIcons();
+        }
+
+        const userBtn = document.getElementById('user-btn');
+        const cartBtn = document.getElementById('cart-btn');
+        const searchBtn = document.getElementById('search-btn');
+        const userModal = document.getElementById('user-modal');
+        const cartModal = document.getElementById('cart-modal');
+        const searchModal = document.getElementById('search-modal');
+        const closeButtons = document.querySelectorAll('.close-modal');
+        
+        const showSignupBtn = document.getElementById('show-signup');
+        const showLoginBtn = document.getElementById('show-login');
+        const loginForm = document.getElementById('login-form');
+        const signupForm = document.getElementById('signup-form');
+
+        const openModal = (modal) => {
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            const content = modal.querySelector('.modal-content');
+            if (modal.id === 'cart-modal') {
+                 content.classList.remove('translate-x-full');
+            } else {
+                 content.classList.remove('scale-95');
+            }
+        };
+
+        const closeModal = (modal) => {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            const content = modal.querySelector('.modal-content');
+            if (modal.id === 'cart-modal') {
+                 content.classList.add('translate-x-full');
+            } else {
+                 content.classList.add('scale-95');
+            }
+        };
+
+        // Event listeners
+        userBtn.addEventListener('click', () => {
+            if (!currentUser) {
+                openModal(userModal);
+            }
+        });
+        
+        cartBtn.addEventListener('click', () => {
+            renderCart();
+            openModal(cartModal);
+        });
+        
+        searchBtn.addEventListener('click', () => openModal(searchModal));
+
+        closeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                closeModal(userModal);
+                closeModal(cartModal);
+                closeModal(searchModal);
+            });
+        });
+        
+        // Close modal on backdrop click
+        document.querySelectorAll('.modal-backdrop').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal(modal);
+                }
+            });
+        });
+
+        // Switch between login and signup forms
+        showSignupBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginForm.classList.add('hidden');
+            signupForm.classList.remove('hidden');
+        });
+
+        showLoginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            signupForm.classList.add('hidden');
+            loginForm.classList.remove('hidden');
+        });
+
+        // Handle form submissions with improved validation
+        document.getElementById('login-form-element').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Hide previous error message
+            document.getElementById('login-error-message').classList.add('hidden');
+            
+            loginUser(email, password);
+        });
+
+        document.getElementById('signup-form-element').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            
+            // Hide previous error message
+            document.getElementById('signup-error-message').classList.add('hidden');
+            
+            registerUser(name, email, password);
+        });
+        
+        // Add real-time validation for email fields
+        document.getElementById('login-email').addEventListener('blur', function() {
+            validateField('login-email', 'login-email-error', isValidEmail, 'Please enter a valid email address');
+        });
+        
+        document.getElementById('signup-email').addEventListener('blur', function() {
+            validateField('signup-email', 'signup-email-error', isValidEmail, 'Please enter a valid email address');
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('search-input');
+        const searchSubmit = document.getElementById('search-submit');
+
+        searchSubmit.addEventListener('click', () => {
+            const query = searchInput.value;
+            searchProducts(query);
+        });
+
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const query = searchInput.value;
+                searchProducts(query);
+            }
+        });
+
+        // Handle checkout
+        document.getElementById('checkout-btn').addEventListener('click', function() {
+            if (cart.length === 0) {
+                alert('Your cart is empty');
+                return;
+            }
+            
+            if (!currentUser) {
+                alert('Please login to complete your purchase');
+                closeModal(cartModal);
+                openModal(userModal);
+                return;
+            }
+            
+            alert('Order placed successfully! Thank you for your purchase.');
+            cart = [];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            renderCart();
+            closeModal(cartModal);
+        });
+
+        // Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Initialize the page
+        window.onload = function() {
+            renderProducts();
+            renderSecondhandProducts();
+            updateCartCount();
+            updateUserInterface();
+        };
+
+        // Newsletter subscription
+        document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('newsletter-email').value;
+            const messageElement = document.getElementById('newsletter-message');
+            
+            messageElement.classList.remove('hidden', 'text-green-500', 'text-red-500');
+            
+            try {
+                if (EmailStorage.addSubscriber(email)) {
+                    // Success
+                    messageElement.textContent = "Thank you for subscribing!";
+                    messageElement.classList.add('text-green-500');
+                    document.getElementById('newsletter-email').value = '';
+                } else {
+                    // Already subscribed
+                    messageElement.textContent = "You're already subscribed!";
+                    messageElement.classList.add('text-green-500');
+                }
+            } catch (error) {
+                // Invalid email
+                messageElement.textContent = "Please enter a valid email address.";
+                messageElement.classList.add('text-red-500');
+            }
+            
+            messageElement.classList.remove('hidden');
+            
+            // Hide message after 3 seconds
+            setTimeout(() => {
+                messageElement.classList.add('hidden');
+            }, 3000);
+        });
+    </script>
+</body>
+</html>

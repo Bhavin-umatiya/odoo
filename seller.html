@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Become a Seller - EcoFinds</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="emailStorage.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .modal-backdrop {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .modal-content {
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="index.html" class="text-3xl font-bold text-green-600">EcoFinds</a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html#shop" class="text-gray-600 hover:text-green-600 transition">Shop</a>
+                    <a href="index.html#about" class="text-gray-600 hover:text-green-600 transition">About</a>
+                    <a href="index.html#contact" class="text-gray-600 hover:text-green-600 transition">Contact</a>
+                </nav>
+
+                <!-- Icons -->
+                <div class="flex items-center space-x-4">
+                    <button id="user-btn" class="text-gray-600 hover:text-green-600">
+                        <i data-lucide="user"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="md:hidden text-gray-600 hover:text-green-600">
+                        <i data-lucide="menu"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <a href="index.html#shop" class="block py-3 px-4 text-gray-600 hover:bg-gray-100 hover:text-green-600 transition">Shop</a>
+            <a href="index.html#about" class="block py-3 px-4 text-gray-600 hover:bg-gray-100 hover:text-green-600 transition">About</a>
+            <a href="index.html#contact" class="block py-3 px-4 text-gray-600 hover:bg-gray-100 hover:text-green-600 transition">Contact</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="bg-green-50 py-20">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">Become a Seller on EcoFinds</h1>
+                <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">Turn your pre-loved items into cash and contribute to sustainable shopping. Join our community of eco-conscious sellers today!</p>
+                <a href="#register" class="bg-green-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-700 transition shadow-lg">Get Started</a>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="py-16">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-12">Why Sell on EcoFinds?</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Benefit Card -->
+                    <div class="bg-white rounded-lg shadow-md p-8 text-center">
+                        <div class="text-green-600 mx-auto mb-4">
+                            <i data-lucide="dollar-sign" class="w-16 h-16 mx-auto"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Earn Extra Income</h3>
+                        <p class="text-gray-600">Turn items you no longer need into cash. Set your own prices and keep more of what you earn with our competitive fees.</p>
+                    </div>
+                    
+                    <!-- Benefit Card -->
+                    <div class="bg-white rounded-lg shadow-md p-8 text-center">
+                        <div class="text-green-600 mx-auto mb-4">
+                            <i data-lucide="leaf" class="w-16 h-16 mx-auto"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Support Sustainability</h3>
+                        <p class="text-gray-600">Give your items a second life and reduce waste. Join our mission to promote sustainable and responsible shopping habits.</p>
+                    </div>
+                    
+                    <!-- Benefit Card -->
+                    <div class="bg-white rounded-lg shadow-md p-8 text-center">
+                        <div class="text-green-600 mx-auto mb-4">
+                            <i data-lucide="users" class="w-16 h-16 mx-auto"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Reach More Buyers</h3>
+                        <p class="text-gray-600">Connect with eco-conscious shoppers looking specifically for secondhand items. Our platform brings buyers directly to you.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-12">How It Works</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <!-- Step -->
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">1</div>
+                        <h3 class="text-xl font-semibold mb-2">Sign Up</h3>
+                        <p class="text-gray-600">Complete our seller registration form with your details.</p>
+                    </div>
+                    
+                    <!-- Step -->
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">2</div>
+                        <h3 class="text-xl font-semibold mb-2">Create Listings</h3>
+                        <p class="text-gray-600">Upload photos and details about your items through your dashboard.</p>
+                    </div>
+                    
+                    <!-- Step -->
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">3</div>
+                        <h3 class="text-xl font-semibold mb-2">Ship Items</h3>
+                        <p class="text-gray-600">When items sell, pack and ship them to the buyers.</p>
+                    </div>
+                    
+                    <!-- Step -->
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">4</div>
+                        <h3 class="text-xl font-semibold mb-2">Get Paid</h3>
+                        <p class="text-gray-600">Receive payments directly to your preferred payment method.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Registration Form -->
+        <section id="register" class="py-16">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
+                <h2 class="text-3xl font-bold text-center mb-12">Seller Registration</h2>
+                
+                <div class="bg-white rounded-lg shadow-md p-8">
+                    <form id="seller-registration-form" class="space-y-6">
+                        <h3 class="text-xl font-semibold mb-4">Personal Information</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="first-name" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                                <input type="text" id="first-name" name="firstName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                                <p id="first-name-error" class="text-red-500 text-xs mt-1 hidden">First name is required.</p>
+                            </div>
+                            
+                            <div>
+                                <label for="last-name" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                                <input type="text" id="last-name" name="lastName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                                <p id="last-name-error" class="text-red-500 text-xs mt-1 hidden">Last name is required.</p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            <p id="email-error" class="text-red-500 text-xs mt-1 hidden">Please enter a valid email address.</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                                <input type="password" id="password" name="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required minlength="8">
+                                <p id="password-error" class="text-red-500 text-xs mt-1 hidden">Password must be at least 8 characters.</p>
+                            </div>
+                            
+                            <div>
+                                <label for="confirm-password" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                                <input type="password" id="confirm-password" name="confirmPassword" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                                <p id="confirm-password-error" class="text-red-500 text-xs mt-1 hidden">Passwords don't match.</p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            <p id="phone-error" class="text-red-500 text-xs mt-1 hidden">Please enter a valid phone number.</p>
+                        </div>
+                        
+                        <hr class="my-8">
+                        
+                        <h3 class="text-xl font-semibold mb-4">Seller Information</h3>
+                        
+                        <div>
+                            <label for="shop-name" class="block text-sm font-medium text-gray-700 mb-1">Shop Name</label>
+                            <input type="text" id="shop-name" name="shopName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            <p id="shop-name-error" class="text-red-500 text-xs mt-1 hidden">Shop name is required.</p>
+                        </div>
+                        
+                        <div>
+                            <label for="shop-description" class="block text-sm font-medium text-gray-700 mb-1">Shop Description</label>
+                            <textarea id="shop-description" name="shopDescription" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required></textarea>
+                            <p id="shop-description-error" class="text-red-500 text-xs mt-1 hidden">Shop description is required.</p>
+                        </div>
+                        
+                        <div>
+                            <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                            <input type="text" id="address" name="address" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            <p id="address-error" class="text-red-500 text-xs mt-1 hidden">Address is required.</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label for="city" class="block text-sm font-medium text-gray-700 mb-1">City</label>
+                                <input type="text" id="city" name="city" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                                <p id="city-error" class="text-red-500 text-xs mt-1 hidden">City is required.</p>
+                            </div>
+                            
+                            <div>
+                                <label for="state" class="block text-sm font-medium text-gray-700 mb-1">State</label>
+                                <input type="text" id="state" name="state" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                                <p id="state-error" class="text-red-500 text-xs mt-1 hidden">State is required.</p>
+                            </div>
+                            
+                            <div>
+                                <label for="zip" class="block text-sm font-medium text-gray-700 mb-1">ZIP Code</label>
+                                <input type="text" id="zip" name="zip" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                                <p id="zip-error" class="text-red-500 text-xs mt-1 hidden">ZIP code is required.</p>
+                            </div>
+                        </div>
+                        
+                        <hr class="my-8">
+                        
+                        <h3 class="text-xl font-semibold mb-4">Payment Information</h3>
+                        
+                        <div>
+                            <label for="payment-method" class="block text-sm font-medium text-gray-700 mb-1">Preferred Payment Method</label>
+                            <select id="payment-method" name="paymentMethod" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                                <option value="">Select payment method</option>
+                                <option value="bank-transfer">Bank Transfer</option>
+                                <option value="paypal">PayPal</option>
+                                <option value="venmo">Venmo</option>
+                            </select>
+                            <p id="payment-method-error" class="text-red-500 text-xs mt-1 hidden">Please select a payment method.</p>
+                        </div>
+                        
+                        <div id="bank-details" class="hidden space-y-6">
+                            <div>
+                                <label for="account-name" class="block text-sm font-medium text-gray-700 mb-1">Account Holder Name</label>
+                                <input type="text" id="account-name" name="accountName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                            </div>
+                            
+                            <div>
+                                <label for="account-number" class="block text-sm font-medium text-gray-700 mb-1">Account Number</label>
+                                <input type="text" id="account-number" name="accountNumber" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                            </div>
+                            
+                            <div>
+                                <label for="routing-number" class="block text-sm font-medium text-gray-700 mb-1">Routing Number</label>
+                                <input type="text" id="routing-number" name="routingNumber" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                            </div>
+                        </div>
+                        
+                        <div id="paypal-details" class="hidden">
+                            <div>
+                                <label for="paypal-email" class="block text-sm font-medium text-gray-700 mb-1">PayPal Email</label>
+                                <input type="email" id="paypal-email" name="paypalEmail" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                            </div>
+                        </div>
+                        
+                        <div id="venmo-details" class="hidden">
+                            <div>
+                                <label for="venmo-username" class="block text-sm font-medium text-gray-700 mb-1">Venmo Username</label>
+                                <input type="text" id="venmo-username" name="venmoUsername" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                            </div>
+                        </div>
+                        
+                        <hr class="my-8">
+                        
+                        <div class="flex items-center mb-6">
+                            <input type="checkbox" id="terms" name="terms" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded" required>
+                            <label for="terms" class="ml-2 block text-sm text-gray-700">I agree to the <a href="#" class="text-green-600 hover:underline">Terms and Conditions</a> and <a href="#" class="text-green-600 hover:underline">Privacy Policy</a></label>
+                            <p id="terms-error" class="text-red-500 text-xs mt-1 hidden">You must agree to the terms and conditions.</p>
+                        </div>
+                        
+                        <p id="registration-error" class="text-red-500 text-sm mb-4 hidden text-center"></p>
+                        
+                        <div>
+                            <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition">Register as Seller</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-12">What Our Sellers Say</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Testimonial -->
+                    <div class="bg-white rounded-lg shadow-md p-8">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-gray-200 w-12 h-12 rounded-full mr-4"></div>
+                            <div>
+                                <h4 class="font-semibold">Sarah Johnson</h4>
+                                <p class="text-sm text-gray-600">Seller since 2023</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">"I've been able to declutter my home and make extra income selling items I no longer need. The platform is so easy to use and the customers are great!"</p>
+                    </div>
+                    
+                    <!-- Testimonial -->
+                    <div class="bg-white rounded-lg shadow-md p-8">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-gray-200 w-12 h-12 rounded-full mr-4"></div>
+                            <div>
+                                <h4 class="font-semibold">Michael Chen</h4>
+                                <p class="text-sm text-gray-600">Seller since 2022</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">"I started selling vintage items as a hobby, but it's grown into a nice side business. The EcoFinds community really appreciates unique, pre-loved items."</p>
+                    </div>
+                    
+                    <!-- Testimonial -->
+                    <div class="bg-white rounded-lg shadow-md p-8">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-gray-200 w-12 h-12 rounded-full mr-4"></div>
+                            <div>
+                                <h4 class="font-semibold">Emma Rodriguez</h4>
+                                <p class="text-sm text-gray-600">Seller since 2021</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">"As someone who cares deeply about sustainability, I love that EcoFinds makes it so simple to give items a second life. Plus, the seller dashboard makes tracking sales a breeze."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="py-16">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
+                <h2 class="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+                
+                <div class="space-y-6">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="font-semibold text-lg">How much does it cost to become a seller?</h3>
+                        <p class="text-gray-600 mt-2">There's no upfront cost to become a seller. We take a small commission from each sale, which helps us maintain the platform.</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="font-semibold text-lg">What types of items can I sell?</h3>
+                        <p class="text-gray-600 mt-2">You can sell pre-loved items in good condition, including clothing, accessories, home goods, electronics, and more. We prohibit certain items like weapons, counterfeit goods, and hazardous materials.</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="font-semibold text-lg">How do I get paid for my sales?</h3>
+                        <p class="text-gray-600 mt-2">Payments are processed through your chosen payment method (bank transfer, PayPal, or Venmo) once the buyer confirms receipt of the item. Funds are typically released within 2-3 business days.</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="font-semibold text-lg">Who handles shipping?</h3>
+                        <p class="text-gray-600 mt-2">Sellers are responsible for packaging and shipping items to buyers. You can set your shipping rates or offer free shipping to attract more buyers.</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="font-semibold text-lg">What happens if an item is damaged during shipping?</h3>
+                        <p class="text-gray-600 mt-2">We recommend purchasing shipping insurance for high-value items. If an item arrives damaged, we have a resolution process to help sellers and buyers reach a fair solution.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="bg-green-600 text-white py-16">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold mb-6">Ready to Join EcoFinds?</h2>
+                <p class="text-xl mb-8 max-w-2xl mx-auto">Start selling your pre-loved items today and join our community of eco-conscious sellers.</p>
+                <a href="#register" class="bg-white text-green-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition shadow-lg">Become a Seller</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- About -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4">EcoFinds</h3>
+                    <p class="text-gray-400">Your one-stop shop for sustainable and secondhand items.</p>
+                </div>
+                <!-- Links -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul>
+                        <li class="mb-2"><a href="index.html#shop" class="hover:text-green-400 transition">Shop</a></li>
+                        <li class="mb-2"><a href="index.html#about" class="hover:text-green-400 transition">About Us</a></li>
+                        <li class="mb-2"><a href="seller-dashboard.html" class="hover:text-green-400 transition">Seller Dashboard</a></li>
+                    </ul>
+                </div>
+                <!-- Social -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-lucide="facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-lucide="instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i data-lucide="twitter"></i></a>
+                    </div>
+                </div>
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact</h3>
+                    <p class="text-gray-400">Email: support@ecofinds.com</p>
+                    <p class="text-gray-400">Phone: (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-500 text-sm">
+                <p>&copy; 2025 EcoFinds. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script -->
+    <script>
+        // Initialize icons
+        lucide.createIcons();
+
+        // Field validation
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        function isValidPhone(phone) {
+            const phoneRegex = /^\d{10,}$/;
+            return phoneRegex.test(phone.replace(/[^0-9]/g, ''));
+        }
+        
+        function validateField(fieldId, errorId, validationFn, errorMsg) {
+            const field = document.getElementById(fieldId);
+            const errorElement = document.getElementById(errorId);
+            const isValid = validationFn(field.value);
+            
+            if (!isValid) {
+                field.classList.add('border-red-500');
+                errorElement.classList.remove('hidden');
+                errorElement.textContent = errorMsg;
+            } else {
+                field.classList.remove('border-red-500');
+                errorElement.classList.add('hidden');
+            }
+            
+            return isValid;
+        }
+        
+        // Payment method toggle
+        const paymentMethodSelect = document.getElementById('payment-method');
+        const bankDetails = document.getElementById('bank-details');
+        const paypalDetails = document.getElementById('paypal-details');
+        const venmoDetails = document.getElementById('venmo-details');
+        
+        paymentMethodSelect.addEventListener('change', function() {
+            // Hide all payment details sections
+            bankDetails.classList.add('hidden');
+            paypalDetails.classList.add('hidden');
+            venmoDetails.classList.add('hidden');
+            
+            // Show selected payment details section
+            if (this.value === 'bank-transfer') {
+                bankDetails.classList.remove('hidden');
+            } else if (this.value === 'paypal') {
+                paypalDetails.classList.remove('hidden');
+            } else if (this.value === 'venmo') {
+                venmoDetails.classList.remove('hidden');
+            }
+        });
+        
+        // Form submission
+        const registrationForm = document.getElementById('seller-registration-form');
+        
+        registrationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate all fields
+            let isValid = true;
+            
+            // Personal information validation
+            isValid = validateField('first-name', 'first-name-error', 
+                value => value.trim().length > 0, 
+                'First name is required') && isValid;
+                
+            isValid = validateField('last-name', 'last-name-error', 
+                value => value.trim().length > 0, 
+                'Last name is required') && isValid;
+                
+            isValid = validateField('email', 'email-error', 
+                isValidEmail, 
+                'Please enter a valid email address') && isValid;
+                
+            isValid = validateField('phone', 'phone-error', 
+                isValidPhone, 
+                'Please enter a valid phone number') && isValid;
+                
+            isValid = validateField('password', 'password-error', 
+                value => value.length >= 8, 
+                'Password must be at least 8 characters') && isValid;
+                
+            // Confirm password validation
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            if (password !== confirmPassword) {
+                document.getElementById('confirm-password').classList.add('border-red-500');
+                document.getElementById('confirm-password-error').classList.remove('hidden');
+                document.getElementById('confirm-password-error').textContent = 'Passwords don\'t match';
+                isValid = false;
+            } else {
+                document.getElementById('confirm-password').classList.remove('border-red-500');
+                document.getElementById('confirm-password-error').classList.add('hidden');
+            }
+            
+            // Seller information validation
+            isValid = validateField('shop-name', 'shop-name-error', 
+                value => value.trim().length > 0, 
+                'Shop name is required') && isValid;
+                
+            isValid = validateField('shop-description', 'shop-description-error', 
+                value => value.trim().length > 0, 
+                'Shop description is required') && isValid;
+                
+            isValid = validateField('address', 'address-error', 
+                value => value.trim().length > 0, 
+                'Address is required') && isValid;
+                
+            isValid = validateField('city', 'city-error', 
+                value => value.trim().length > 0, 
+                'City is required') && isValid;
+                
+            isValid = validateField('state', 'state-error', 
+                value => value.trim().length > 0, 
+                'State is required') && isValid;
+                
+            isValid = validateField('zip', 'zip-error', 
+                value => value.trim().length > 0, 
+                'ZIP code is required') && isValid;
+                
+            // Payment method validation
+            isValid = validateField('payment-method', 'payment-method-error', 
+                value => value !== '', 
+                'Please select a payment method') && isValid;
+                
+            // Terms and conditions validation
+            isValid = validateField('terms', 'terms-error', 
+                value => document.getElementById('terms').checked, 
+                'You must agree to the terms and conditions') && isValid;
+                
+            if (!isValid) {
+                return false;
+            }
+            
+            // Check if user with this email already exists
+            const email = document.getElementById('email').value;
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            
+            if (users.find(user => user.email === email)) {
+                document.getElementById('registration-error').textContent = 'A user with this email already exists';
+                document.getElementById('registration-error').classList.remove('hidden');
+                return false;
+            }
+            
+            // Gather form data
+            const formData = new FormData(this);
+            const userData = {
+                id: Date.now(),
+                firstName: formData.get('firstName'),
+                lastName: formData.get('lastName'),
+                name: `${formData.get('firstName')} ${formData.get('lastName')}`,
+                email: formData.get('email'),
+                password: formData.get('password'),
+                phone: formData.get('phone'),
+                role: 'seller',
+                shopName: formData.get('shopName'),
+                shopDescription: formData.get('shopDescription'),
+                address: formData.get('address'),
+                city: formData.get('city'),
+                state: formData.get('state'),
+                zip: formData.get('zip'),
+                paymentMethod: formData.get('paymentMethod'),
+                paymentDetails: {}
+            };
+            
+            // Add payment details based on selected method
+            if (userData.paymentMethod === 'bank-transfer') {
+                userData.paymentDetails = {
+                    accountName: formData.get('accountName'),
+                    accountNumber: formData.get('accountNumber'),
+                    routingNumber: formData.get('routingNumber')
+                };
+            } else if (userData.paymentMethod === 'paypal') {
+                userData.paymentDetails = {
+                    paypalEmail: formData.get('paypalEmail')
+                };
+            } else if (userData.paymentMethod === 'venmo') {
+                userData.paymentDetails = {
+                    venmoUsername: formData.get('venmoUsername')
+                };
+            }
+            
+            // Save user to localStorage
+            users.push(userData);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Set current user
+            localStorage.setItem('currentUser', JSON.stringify(userData));
+            
+            // Redirect to seller dashboard
+            alert('Registration successful! Redirecting to your seller dashboard.');
+            window.location.href = 'seller-dashboard.html';
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
