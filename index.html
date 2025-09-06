@@ -446,179 +446,179 @@
         // Initialize icons
         lucide.createIcons();
 
-        // Fallback implementation for EmailStorage if the script fails to load
-        if (typeof EmailStorage === 'undefined') {
-            console.warn('EmailStorage.js not loaded, creating fallback...');
-            window.EmailStorage = {
-                // Basic implementation of EmailStorage
-                subscribers: JSON.parse(localStorage.getItem('newsletter_subscribers')) || [],
-                users: JSON.parse(localStorage.getItem('users')) || [],
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+        
+        // Check for saved theme preference or use system preference
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        // Set initial theme
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            htmlElement.classList.add('dark');
+        }
+        
+        // Handle theme toggle
+        themeToggle.addEventListener('click', function() {
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                htmlElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Product Data
+        const products = [
+            {
+                id: 1,
+                name: "Maserati Gold Chronograph Watch",
+                price: 299.99,
+                image: "./product1.jpeg", // Changed to relative path for browser compatibility
+                category: "featured",
+                description: "Elegant gold-tone Maserati chronograph watch with black dial and stainless steel band. Water resistant to 100m."
+            },
+            {
+                id: 2,
+                name: "watch",
+                price: 24.50,
+                image: "./product2.jpeg",
+                category: "featured",
+                description: "Airpode and watch"
+            },
+            {
+                id: 3,
+                name: "i-phone",
+                price: 29.00,
+                image: "./product3.jpeg",
+                category: "featured",
+                description: "i-phone."
+            },
+            {
+                id: 4,
+                name: "Tabl",
+                price: 15.75,
+                image: "./product4.jpeg",
+                category: "featured",
+                description: "Tablet."
+            },
+            {
+                id: 5,
+                name: "watch",
+                price: 66.99,
+                image: "./product5.jpeg",
+                category: "new",
+                description: "i Watch."
+            },
+            {
+                id: 6,
+                name: "Tablet",
+                price: 80.00,
+                image: "./product6.jpeg",
+                category: "new",
+                description: "i-pad"
+            },
+            {
+                id: 7,
+                name: "Ring & chain",
+                price: 35.00,
+                image: "./product7.jpeg",
+                category: "new",
+                description: "Chain."
+            },
+            {
+                id: 8,
+                name: "Ring",
+                price: 9.99,
+                image: "./product8.jpeg",
+                category: "new",
+                description: "Ring."
+            }
+        ];
+
+        // Sample secondhand products for demonstration when no items exist in localStorage
+        const sampleSecondhandProducts = [
+            {
+                id: 101,
+                title: "Vintage Leather Jacket",
+                price: 89.99,
+                category: "clothing",
+                condition: "good",
+                description: "Classic brown leather jacket, lightly worn. Size M.",
+                sellerName: "Emma Wilson",
+                isSecondhand: true,
+                images: [{ data: "https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" }]
+            },
+            {
+                id: 102,
+                title: "Refurbished iPhone 11",
+                price: 349.99,
+                category: "electronics",
+                condition: "very-good",
+                description: "Fully functional iPhone 11, 64GB, battery health 92%.",
+                sellerName: "Tech Renewals",
+                isSecondhand: true,
+                images: [{ data: "https://images.unsplash.com/photo-1591337676887-a217a6970a8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" }]
+            },
+            // {
+            //     id: 103,
+            //     title: "Antique Wooden Coffee Table",
+            //     price: 125.00,
+            //     category: "home",
+            //     condition: "good",
+            //     description: "Solid oak coffee table with vintage design, some patina adds character.",
+            //     sellerName: "Vintage Home",
+            //     isSecondhand: true,
+            //     images: [{ data: "https://images.unsplash.com/photo-1592078615290-033ee584dd43?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" }]
+            // },
+            {
+                id: 104,
+                title: "Used Book Collection - Classic Novels",
+                price: 45.00,
+                category: "books",
+                condition: "good",
+                description: "Set of 8 classic novels including works by Dickens, Austen, and Hemingway.",
+                sellerName: "Book Lover",
+                isSecondhand: true,
+                images: [{ data: "https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" }]
+            }
+        ];
+
+        // Get secondhand products from localStorage
+        function getSecondhandProducts() {
+            try {
+                // Try to get products from localStorage
+                const allProducts = JSON.parse(localStorage.getItem('products')) || [];
                 
-                isValidEmail: function(email) {
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    return emailRegex.test(email);
-                },
+                // Filter for secondhand products
+                const secondhandProducts = allProducts.filter(product => 
+                    product.isSecondhand === true || 
+                    product.category === "secondhand" || 
+                    (product.condition && product.condition !== "new")
+                );
                 
-                addUser: function(name, email, password, role = 'buyer') {
-                    if (!this.isValidEmail(email)) {
-                        throw new Error('Invalid email format');
-                    }
-                    
-                    if (this.getUserByEmail(email)) {
-                        return false;
-                    }
-                    
-                    const newUser = {
-                        id: Date.now(),
-                        name,
-                        email,
-                        password,
-                        role: role || 'buyer',
-                        dateJoined: new Date().toISOString()
-                    };
-                    
-                    this.users.push(newUser);
-                    localStorage.setItem('users', JSON.stringify(this.users));
-                    return newUser;
-                },
+                console.log(`Found ${secondhandProducts.length} secondhand products in localStorage`);
                 
-                getUserByEmail: function(email) {
-                    return this.users.find(user => user.email === email);
-                },
-                
-                verifyUser: function(email, password) {
-                    const user = this.users.find(user => user.email === email && user.password === password);
-                    if (user && !user.role) {
-                        user.role = 'buyer';
-                    }
-                    return user;
-                },
-                
-                updateUser: function(userId, userData) {
-                    const userIndex = this.users.findIndex(user => user.id === userId);
-                    if (userIndex === -1) return false;
-                    
-                    this.users[userIndex] = { ...this.users[userIndex], ...userData };
-                    localStorage.setItem('users', JSON.stringify(this.users));
-                    return this.users[userIndex];
-                },
-                
-                upgradeToSeller: function(userId) {
-                    const userIndex = this.users.findIndex(user => user.id === userId);
-                    if (userIndex === -1) return false;
-                    
-                    this.users[userIndex].role = 'seller';
-                    this.users[userIndex].dateUpgraded = new Date().toISOString();
-                    localStorage.setItem('users', JSON.stringify(this.users));
-                    return this.users[userIndex];
+                // If no products found in localStorage, use sample data
+                if (secondhandProducts.length === 0) {
+                    console.log("Using sample secondhand products");
+                    return sampleSecondhandProducts;
                 }
-            };
-            console.log("Created EmailStorage fallback");
-        }
-
-        // Fix modal handling
-        const userModal = document.getElementById('user-modal');
-        const cartModal = document.getElementById('cart-modal');
-        const searchModal = document.getElementById('search-modal');
-
-        function openModal(modal) {
-            console.log('Opening modal:', modal.id);
-            modal.classList.remove('opacity-0', 'pointer-events-none');
-            const content = modal.querySelector('.modal-content');
-            if (modal.id === 'cart-modal') {
-                content.classList.remove('translate-x-full');
-            } else {
-                content.classList.remove('scale-95');
+                
+                return secondhandProducts;
+            } catch (error) {
+                console.error("Error loading secondhand products:", error);
+                // Return sample data as fallback in case of any error
+                return sampleSecondhandProducts;
             }
         }
 
-        function closeModal(modal) {
-            console.log('Closing modal:', modal.id);
-            modal.classList.add('opacity-0', 'pointer-events-none');
-            const content = modal.querySelector('.modal-content');
-            if (modal.id === 'cart-modal') {
-                content.classList.add('translate-x-full');
-            } else {
-                content.classList.add('scale-95');
-            }
-        }
-
-        // Add modal event listeners
-        document.querySelectorAll('.close-modal').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const modal = e.target.closest('.modal-backdrop');
-                if (modal) closeModal(modal);
-            });
-        });
-
-        // Product images path fix
-        products.forEach(product => {
-            // Fix product image paths for GitHub Pages
-            if (product.image.startsWith('./')) {
-                product.image = product.image.substring(2);
-            }
-        });
-
-        // Debug login functionality
-        document.getElementById('login-form-element').addEventListener('submit', function(e) {
-            e.preventDefault();
-            console.log('Login form submitted');
-            
-            const email = document.getElementById('login-email').value.trim();
-            const password = document.getElementById('login-password').value;
-            
-            console.log('Attempting login with:', email);
-            const loginResult = loginUser(email, password);
-            console.log('Login result:', loginResult);
-        });
-
-        document.getElementById('signup-form-element').addEventListener('submit', function(e) {
-            e.preventDefault();
-            console.log('Signup form submitted');
-            
-            const name = document.getElementById('signup-name').value.trim();
-            const email = document.getElementById('signup-email').value.trim();
-            const password = document.getElementById('signup-password').value;
-            
-            console.log('Attempting registration with:', email);
-            const registerResult = registerUser(name, email, password);
-            console.log('Registration result:', registerResult);
-        });
-
-        // Show signup/login forms
-        document.getElementById('show-signup').addEventListener('click', (e) => {
-            e.preventDefault();
-            document.getElementById('login-form').classList.add('hidden');
-            document.getElementById('signup-form').classList.remove('hidden');
-        });
-
-        document.getElementById('show-login').addEventListener('click', (e) => {
-            e.preventDefault();
-            document.getElementById('signup-form').classList.add('hidden');
-            document.getElementById('login-form').classList.remove('hidden');
-        });
-
-        // User buttons
-        const userBtn = document.getElementById('user-btn');
-        const cartBtn = document.getElementById('cart-btn');
-        const searchBtn = document.getElementById('search-btn');
-
-        userBtn.addEventListener('click', () => {
-            if (!currentUser) {
-                console.log('Opening user modal');
-                openModal(userModal);
-            }
-        });
+        // User Authentication
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
         
-        cartBtn.addEventListener('click', () => {
-            renderCart();
-            openModal(cartModal);
-        });
-        
-        searchBtn.addEventListener('click', () => openModal(searchModal));
-    </script>
-</body>
-</html>
+        // Cart functionality
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
         // Update cart count display
